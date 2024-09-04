@@ -1,0 +1,36 @@
+.upload {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #ccc;
+    color: #0078d4;
+    border-color: #0078d4;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #0078d4;
+    color: #F5F5F5;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload mat-icon {
+    margin-bottom: 7px;
+    margin-top: 9px;
+}
+
+.custom-file-upload span {
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+}

@@ -1,0 +1,16 @@
+.quick-action {
+    background-color: #222222;
+    color: #cccccc;
+    border: 1px solid #313131;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 36%);
+    top: 6px;
+    margin-left: -300px;
+    /* display: none;*/
+    position: absolute;
+    width: 600px;
+    z-index: 2550;
+    left: 50%;
+    margin-left: -300px;
+    -webkit-app-region: no-drag;
+    border-radius: 6px;
+}

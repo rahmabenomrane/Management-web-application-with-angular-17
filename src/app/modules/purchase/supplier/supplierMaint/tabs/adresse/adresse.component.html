@@ -1,0 +1,35 @@
+<div class="flex flex-row p-fluid p-formgrid grid mt-2">
+    <div class="col-6">
+        <div class="field col-12">
+            <label>Adresse</label>
+            <input pInputText type="text" [(ngModel)]="adressValue" class="p-2">
+        </div>
+        <div class="field col-12">
+            <label>Ville</label>
+            <input pInputText type="text" [(ngModel)]="villeValue" class="p-2">
+        </div>
+        <div class="field col-12">
+            <label>Pays</label>
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown [style]="{width: '100%'}" [(ngModel)]="paysValue" optionLabel="format" [options]="mpList" size="sm"></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12">
+            <label>Latitude </label>
+            <input pInputText type="text" [(ngModel)]="latitude" (keyup)="updateMap()" class="p-2">
+        </div>
+        <div class="field col-12">
+            <label>Longitude</label>
+            <input pInputText type="text" [(ngModel)]="longitude" (keyup)="updateMap()" class="p-2">
+        </div>
+        <div class="field col-12">
+            <label>Zoom</label>
+            <input pInputText type="text" [(ngModel)]="zoom" (keyup)="updateMap()" class="p-2">
+        </div>
+    </div>
+    <div class="col-6">
+        <google-map height="500px" width="100%" [options]="options" [center]="options.center" [zoom]="options.zoom">
+            <map-marker [position]="markerPosition"></map-marker>
+        </google-map>
+    </div>
+</div>

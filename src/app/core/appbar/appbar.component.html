@@ -1,0 +1,170 @@
+<div class="appbar">
+    <div class="appbar-layout" [ngClass]="{'appbar-expanded': sidebarVisibleB}">
+        <div class="module-container">
+            <div class="appbar-content">
+                <div class="appbar-menubar">
+                    <div class="appbar-menubar-button">
+                        <div class="appbar-menubar-button-icon" (click)="toggleSidebar()">
+                            <button class="p-link layout-menu-button layout-topbar-button">
+                                <i class="pi pi-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="appbar-top-composite">
+                    <div class="appbar-apps">
+                        <ul class="appbar-apps-container">
+                            <div *ngFor="let pinnedItem of BarModules" class="appbar-app-item"
+                                [ngClass]="{'hidden': !showPinned}">
+                                <li>
+                                    <div class="appbar-menubar-button-icon"
+                                        (mouseenter)="showSidebarB($event, pinnedItem)">
+                                        <button class="p-link layout-menu-button layout-topbar-button">
+                                            <i #icon [class]="pinnedItem.module_icon"
+                                                [ngClass]="{ 'activeModule-icon': pinnedItem.active }"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </div>
+                            <li class="appbar-app-item" (click)="toggleHome('home');"
+                                [ngClass]="{ 'activeHome': activeHome }">
+                                <div class="appbar-menubar-button-icon">
+                                    <button #menubutton class="p-link layout-menu-button layout-topbar-button">
+                                        <i class="pi pi-home" [ngClass]="{ 'activeHome-icon': activeHome }"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Affichage des détails du module -->
+                    <div class="appbar-module-details" *ngIf="sidebarVisibleB"
+                        (mouseenter)="onSidebarMouseEnter($event)" (mouseleave)="onSidebarMouseLeave($event)">
+                        <span>{{selectedModuleName }}</span>
+                        <div class="appbar-module-buttons">
+                            <button class="p-button p-component">Button 1</button>
+                            <button class="p-button p-component">Button 2</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="appbar-bottom-composite">
+                    <div class="appbar-apps">
+                        <ul class="appbar-apps-container">
+                            <li class="appbar-app-item">
+                                <a class="appbar-app-label" (click)="toggleMenumaintenance($event)">
+                                    <i class="pi pi-spin pi-cog" style="font-size: 1.5rem"></i>
+                                    <span class="codicon codicon-extensions"></span>
+                                </a>
+                            </li>
+                            <li class="appbar-app-item">
+                                <a class="appbar-app-label">
+                                    <span class="codicon codicon-gear"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--le menu de maintenance-->
+
+
+
+<div class="card flex justify-content-center">
+    <!-- Menu secondaire avec l'option "Maintenance des menus" -->
+    <p-tieredMenu #maintMenu [popup]="true" [model]="items" [appendTo]="'body'"
+        class="custom-tiered-menu"></p-tieredMenu>
+</div>
+
+<div class="layout-sidebar">
+    <ul class="layout-menu">
+        <h2 class="text-3xl font-semibold text-primary">
+            Menu
+        </h2>
+        <ul class="list-none m-0">
+            <!-- Affichage dynamique des éléments du menu principal -->
+            <li *ngFor="let item of itemsmenu">
+                <ul class="list-none p-0 m-0 overflow-hidden">
+                    <li>
+                        <a pRipple
+                            class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:text-primary active:text-primary hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                            [routerLink]="item.routerLink" routerLinkActive="active" style="text-decoration: none;">
+                            <i [class]="item.icon" [style.marginRight.px]="10"></i>
+                            <span class="font-medium">{{ item.label | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </ul>
+</div>
+
+
+
+
+<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem h-30rem custom-sidebar-class">
+    <ng-template pTemplate="headless" styleClass="headlessT">
+
+        <div class="sidebar-content">
+            <div class="search-container">
+                <p-iconField iconPosition="left">
+                    <p-inputIcon [styleClass]="searchClicked ? 'pi pi-arrow-left' : 'pi pi-search'"
+                        (click)="toggleView()" />
+                    <input pInputText type="text" class="p-inputtext-sm w-27rem search-bar"
+                        [ngClass]="{'search-bar-list-view': showList}" placeholder="Rechercher"
+                        [(ngModel)]="searchString" (keyup)="onSearch($event.target.value)"
+                        (click)="onSearch(searchString)" />
+                </p-iconField>
+            </div>
+            <!--modules  en grid       -------------- ---------------   --------------   --------------------->
+            <div class="modules-grid" *ngIf="!showList">
+                <div class="moduleButton" *ngFor="let item of userModules">
+                    <div class="moduleContent"
+                        (click)="selectModule(item) ;toggleBarModuleQ(item); getMenusByModule(item.module_id);toggleSidebar()"
+                        (mouseover)="hoveredModule = item" (mouseleave)="hoveredModule = null"
+                        [class.selected]="selectedModule === item">
+                        <i class="moduleIcon" [class]="item.moduleIcon"></i>
+                        <div class=" moduleName">{{ item.module_name }}</div>
+                        <i class="fa-solid fa-thumbtack fa-rotate-by fa-xs pin-icon"
+                            *ngIf="hoveredModule === item || favoriteModules.includes(item)"
+                            (click)="toggleFavoriteModuleQ(item)" style="--fa-rotate-angle: 45deg;"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- modules en liste -->
+
+            <p-scroller [items]="filteredModules" [itemSize]="50" scrollHeight="300px"
+                styleClass="module-list-container" [style]="{'width': '100%', 'height': '100%'}">
+                <ng-template pTemplate="item" let-item>
+                    <li class="moduleListItem">
+                        <i class="moduleIcon" [class]="item.moduleIcon"></i>
+                        <span class="moduleName">{{ item.module_name }}</span>
+                    </li>
+                </ng-template>
+            </p-scroller>
+
+            <!--fav  modules  -->
+            <div *ngIf="favoriteModules.length > 0 && !showList" class="favorite-modules-section">
+                <hr class="mb-3 mx-3 border-top-1 border-none surface-border" style="width: 100%;" />
+                <div class="modules-grid">
+                    <div class="moduleButton" *ngFor="let item of favoriteModules">
+                        <div class="moduleContent">
+                            <i class="moduleIcon" [class]="item.moduleIcon"></i>
+                            <div class="moduleName">{{ item.module_name }}</div>
+                            <i class="fa-solid fa-thumbtack fa-rotate-by fa-xs pin-icon"
+                                (click)="toggleFavoriteModuleQ(item)" style="--fa-rotate-angle: 45deg;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</p-sidebar>

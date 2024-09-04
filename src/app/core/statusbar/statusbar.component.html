@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<footer class="statusbar-layout">
+
+    <div class="statusbar-left-content">
+        <div class="statusbar-item focused-item">
+            <a class="statusbar-item-label-focused-item">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </a>
+        </div>
+        <div class="statusbar-item">
+            <a class="statusbar-item-label">
+                <span class="codicon codicon-bug"></span> Report problem
+            </a>
+        </div>
+        <div *ngFor="let item of leftItems" class="statusbar-item" (click)="item.click()">
+            <a class="statusbar-item-label">
+                <i [class]="item.iconClass"></i> {{ item.text }}
+            </a>
+        </div>
+    </div>
+    <div class="statusbar-right-content">
+        <div class="statusbar-item last-visible-item" (click)="toggleMenu($event)">
+            <a class="statusbar-item-label">
+                <span class="flag-icon flag-icon-fr"></span>
+                <i class="fa-solid fa-language"></i> fr-FR
+            </a>
+            <!-- Menu de sélection de langue -->
+            <p-menu  #languageMenu [popup]="true" [model]="menuItems" [style]="{ minWidth: '150px' }" [appendTo]="'body'" class="p-menu-overlay-top" />
+        </div>
+        <div class="statusbar-item">
+            <a class="statusbar-item-label">
+                <!-- <fa-icon [icon]="faRotate"></fa-icon> -->
+                <i class="fas fa-exclamation-circle"></i>
+            </a>
+        </div>
+       
+        <div *ngFor="let item of rightItems" class="statusbar-item" (click)="item.click()">
+            <a class="statusbar-item-label">
+                <i [class]="item.iconClass"></i> {{ item.text }}
+            </a>
+        </div>
+    </div>
+
+
+</footer>

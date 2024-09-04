@@ -1,0 +1,79 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-4">
+        <label>Banque :</label>
+        <input pInputText id="bank" [(ngModel)]="bankValue" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>% Escompte :</label>
+        <input pInputText id="escompte" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>MP :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown placeholder="MP" [(ngModel)]="mpValue" [options]="mpList" [style]="{width: '100%'}" size="sm" optionLabel="format" [class.ng-invalid]="mpRequired" [class.ng-dirty]="mpRequired" ></p-dropdown>
+        </div>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-4">
+        <label>Condition :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown [style]="{width: '100%'}" size="sm" [(ngModel)]="conditionValue" optionLabel="format" [options]="mpList" [class.ng-invalid]="conditionRequired" [class.ng-dirty]="conditionRequired" ></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>% Ristourne :</label>
+        <input pInputText id="ristourne" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>% Remise :</label>
+        <input pInputText id="remise" type="text" class="p-2">
+    </div>
+</div>
+<div class="p-fluid p-formgrid grid mb-1">
+    <div class="field col-12 md:col-4">
+        <label>Actifs :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown [style]="{width: '100%'}" size="sm" optionLabel="decisionName"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>Blocage règlement :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown   [style]="{width: '100%'}" size="sm" optionLabel="decisionName"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-4">
+        <label htmlFor="docTarifPrix">Doc tarif de prix :</label>
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'tarifPrix')" #fileInputTarifPrix style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileInputTarifPrix.click()"></button>
+            <input type="text" pInputText class="p-2" [value]="TarifFileName" [class.ng-invalid]="docTarifRequired" [class.ng-dirty]="docTarifRequired" readonly>
+        </p-inputGroup>        
+    </div>
+    
+</div>
+<div class="p-fluid p-formgrid grid">
+     
+    <div class="field col-12 md:col-2">
+        <label>Conventionné :</label><br>
+        <p-inputSwitch [(ngModel)]="checked"  />
+    </div>
+    <div class="field col-12 md:col-6">
+
+        <label htmlFor="docConvention">Doc convention :</label>
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'convention')" #fileInputConvention style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileInputConvention.click()"></button>
+            <input type="text" pInputText class="p-2" [value]="ConvFileName" [class.ng-invalid]="docConvRequired" [class.ng-dirty]="docConvRequired" readonly> 
+        </p-inputGroup>
+        
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>Devise :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown  [(ngModel)]="deviseValue" [style]="{width: '100%'}" size="sm"  optionLabel="format" [options]="mpList" [class.ng-invalid]="deviseRequired" [class.ng-dirty]="deviseRequired"></p-dropdown>
+        </div>
+    </div>   
+</div>

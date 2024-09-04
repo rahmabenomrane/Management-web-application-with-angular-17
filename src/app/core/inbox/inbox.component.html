@@ -1,0 +1,92 @@
+<router-outlet></router-outlet>
+<p-card header="Boite Réception" styleClass="h-full">
+    <div class="flex gap-4">
+        <div class="flex-2 h-24rem w-2 justify-content-center">
+            <div class="flex flex-column">
+                <div class="flex-item" (click)="getTaskInstances()">Modules</div>
+                <div *ngFor="let module of modulesList" class="flex-item-module" (click)="getTaskByModule(module)">{{ module }}</div>
+            </div>
+        </div>
+        <div class="flex-1 justify-content-left mt-2">
+            <ng-container *ngIf="!noData; else noDataTemplate">
+                <p-table [value]="inboxList" selectionMode="single" [(selection)]="selectedTask" rowGroupMode="subheader" groupRowsBy="processName" 
+                sortField="processName" sortMode="single" (onSort)="onSort()" responsiveLayout="scroll" [scrollable]="true" scrollHeight="70vh" [loading]="loading">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>ID</th>
+                            <th>Entité</th>
+                            <th>Etape courante</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-process let-rowIndex="rowIndex">
+                        <tr pRowGroupHeader *ngIf="rowGroupMetadata[process.processName].index === rowIndex" class="subheader-row">
+                            <td colspan="5">
+                                <span class="font-bold ml-2">{{process.processName}}</span>
+                            </td>
+                        </tr>
+                        <tr [pSelectableRow]="process" class="h-5rem hover-row" (mouseenter)="process.hovered = true" (mouseleave)="process.hovered = false">
+                            <td><span class="small-font">{{process.inboxId }}</span></td>
+                            <td><span class="small-font">{{process.processEntity}}</span></td>
+                            <td><span class="small-font">{{process.currentStep}}</span></td>
+                            <td *ngIf="process.hovered; else emptyCell" class="button-cell">
+                                <div class="button-group ml-3">
+                                    <p-button [raised]="true" severity="secondary" size="small" class="mr-2" icon="pi pi-arrow-up-right" (click)="setProcessInfo(process)"></p-button>
+                                    <p-button [raised]="true" size="small" class="mr-2" icon="pi pi-history" (click)="getProcessHistory(process)"></p-button>
+                                </div>
+                            </td>
+                            <ng-template #emptyCell>
+                                <td><strong>{{process.creationDate}}</strong></td>
+                            </ng-template>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-container>
+        
+            <ng-template #noDataTemplate>             
+                <div class="no-data-message">
+                    <p>Pas de données à afficher.</p>
+                </div>               
+            </ng-template>
+        </div>
+        
+         
+    </div>
+    <p-dialog header="Historique des étapes" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body" [(visible)]="dialogVisible" [style]="{width: '75vw'}" [contentStyle]="{height: '300px'}">
+        <p-table [value]="inboxDetailsList" selectionMode="single" [(selection)]="selectedTask" dataKey="taskId" [scrollable]="true" scrollHeight="flex" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="small-font w-20rem">Etape</th>
+                    <th class="small-font w-12rem">Acteur</th>                                        
+                    <th class="small-font w-6rem">Decision</th>
+                    <th class="small-font w-12rem">Date d'entrée</th>
+                    <th class="small-font w-12rem">Date de fin</th>
+                    <th class="small-font w-12rem">Age</th>
+                    <th class="small-font w-18rem">Remarque</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-process>
+                <tr [pSelectableRow]="inboxDetailsList">
+                    <td>{{process.stepName }}</td>
+                    <td [pTooltip]="process.stepActors" tooltipPosition="right" placeholder="Righ">{{process.stepActor}}</td>
+                    <td>{{process.stepDecision }}</td>
+                    <td>{{process.stepStartTime }}</td>
+                    <td>{{process.stepEndTime }}</td>
+                    <td>{{process.stepAge }}</td>
+                    <td>{{process.stepComment }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <ng-template pTemplate="footer">
+            <button type="button" pButton pRipple icon="pi pi-times" (click)="dialogVisible=false" label="Exit" class="p-button-text"></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-sidebar [(visible)]="sidebarVisible" [modal]="false" position="right" styleClass="w-30rem">
+        <h3>Right Sidebar</h3>
+    </p-sidebar>
+
+</p-card>
+
+
+

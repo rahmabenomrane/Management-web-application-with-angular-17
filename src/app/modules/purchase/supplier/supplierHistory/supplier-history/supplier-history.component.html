@@ -1,0 +1,151 @@
+<p-card header="Suivi création fournisseur" styleClass="h-full text-primary">
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex h-full">
+                <p-calendar [iconDisplay]="'input'"  [showIcon]="true" inputId="icondisplay" styleClass="h-full" />
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex h-full ">
+                <p-calendar [iconDisplay]="'input'"  [showIcon]="true" inputId="icondisplay" styleClass="h-full" />
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Section" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Famille" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Sous famille" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex">
+                <p-dropdown placeholder="Gamme" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Etape courante" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="type" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Fournisseur" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Utilisateur" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="entité" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="status" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <p-button 
+            type="button" 
+            icon="pi pi-chevron-left" 
+            (click)="prev()" 
+            [disabled]="isFirstPage()" 
+            styleClass="p-button-text" />
+        <p-button 
+            type="button"
+            icon="pi pi-refresh" 
+            (click)="reset()" 
+            styleClass="p-button-text" />
+        <p-button 
+            type="button" 
+            icon="pi pi-chevron-right" 
+            (click)="next()" 
+            [disabled]="isLastPage()" 
+            styleClass="p-button-text" />
+    </div>
+    <div class="card">
+        <p-table
+            [value]="customers"
+            [paginator]="true"
+            [rows]="5"
+            [first]="first"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            (onPage)="pageChange($event)"
+            [rowsPerPageOptions]="[10, 25, 50]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Code entité</th>
+                    <th>Entité</th>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Section</th>
+                    <th>Famille</th>
+                    <th>Sous famille</th>
+                    <th>Gamme</th>
+                    <th>Type</th>
+                    <th>Etape courante</th>
+                    <th>Décision</th>
+                    <th>Dtae de création</th>
+                    <th>Heure</th>
+                    <th>Status</th>
+                    <th>Age</th>
+                    <th>Acheteur</th>
+                    <th>Assigné à</th>
+                    <th>Remarque</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td>19.8.75</td>
+                    <td>D695</td>
+                    <td>PRINTPACK</td>
+                    <td>F88888</td>
+                    <td>Dorra Tlili</td>
+                    <td>Service</td>
+                    <td>Transport</td>
+                    <td>Collier</td>
+                    <td>LL</td>
+                    <td>Fin</td>
+                    <td>Validé</td>
+                    <td>11-13-01</td>
+                    <td>18:55</td>
+                    <td>Fin</td>
+                    <td>15j</td>
+                    <td></td>
+                    <td>Anas</td>
+                    <td>Hello </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+            </ng-template>
+        </p-table>
+    </div>
+    
+</p-card>

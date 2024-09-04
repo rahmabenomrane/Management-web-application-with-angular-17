@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div class="container">
+    <p-toast></p-toast>
+
+    <!-- Interface Login username -->
+    <div *ngIf="currentCard === 'login_username'" class="username-card">
+        <div class="card-content">
+            <div class="brand">
+                <a class="logo">
+                    <img class="logo-image" src="assets/images/pgh-logo.png" />
+                    <span class="cmpy-name">poulina <span class="cmpy-name-dc">group</span> holding</span>
+                </a>
+            </div>
+            <div class="content">
+                <div class="sign-in-title">Connexion</div>
+                <div class="text">Veuillez saisir votre nom d'utilisateur</div>
+                <input pInputText pAutoFocus type="text" class="w-12 mt-3" placeholder="Nom d'utilisateur" [(ngModel)]="username"  #usernameInput="ngModel" required (keydown.enter)="checkUsername(username)" [autofocus]="true " />
+         
+                <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="text-red-500 mt-1 text-sm flex items-center">
+                    <i class="fa-solid fa-circle-exclamation fa-beat-fade mt-2"></i> 
+                    <div *ngIf="usernameInput.errors.required" class="m-2">Le nom d'utilisateur est requis.</div>
+                </div>
+              <!--   <div class="flex align-items-center justify-content-between">
+                    <div class="w-12 flex items-center justify-between">                            
+                        <div class="flex items-center mr-3">
+                            <h3 class="mb-2 text-xl font-bold text-gray-900">Tous les clients</h3>
+                        </div>
+                    </div>
+                    <div class="pl-12">
+                        <p-button label="Suivant" icon="pi pi-check" [loading]="loading[0]" (click)="checkUsername(username)" size="small" styleClass=" mt-4 "></p-button>
+                    </div>   
+                </div>    -->
+
+            </div>
+            <div class="flex flex-row-reverse flex-wrap">
+                <div class="flex align-items-center justify-content-center">
+                    <p-button label="Suivant" icon="pi pi-check" [loading]="loading[0]" (click)="checkUsername(username)" size="small" styleClass="mr-4" [style]="{'background-color': '#0c5b84'}"></p-button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+
+
+    <!-- Interface Login mot de passe -->
+    <div *ngIf="currentCard === 'login_pwd'" class="pwd-card">
+        <div class="card-content">
+            <div class="brand">
+                <a class="logo">
+                    <img class="logo-image" src="assets/images/pgh-logo.png" />
+                    <span class="cmpy-name">poulina <span class="cmpy-name-dc">group</span> holding</span>
+                </a>
+            </div>
+            <div class="content">
+                <div class="sign-in-title">Connexion</div>
+                <div class="fullname-container" style="padding-top: 5%;">
+                     <span class="fullname">Bienvenue, {{ user.fullname }}</span> 
+                </div>
+                <div class="text" style=" padding-top: 2%;">Veuillez entrer votre mot de passe </div>
+
+               <p-password [(ngModel)]="password" pAutoFocus class="w-12rem mt-2" [feedback]="false" #passwordInput="ngModel" (keydown.enter)="login()" required  [autofocus]="true "></p-password>
+               <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="text-red-500 mt-1 text-sm flex items-center">
+                    <i class="fa-solid fa-circle-exclamation fa-beat-fade mt-2"></i> 
+                    <div *ngIf="passwordInput.errors.required" class="m-2">Le mot de passe est requis.</div>
+                </div>
+    
+                <div class="mt-2">
+                    <a (click)="redirectToForgotPwd()">Mot de passe oublié ?</a>
+                </div>
+                <div class="flex flex-row-reverse flex-wrap gap-2 mt-4">
+                    <div class="flex align-items-center justify-content-center">
+                        <p-button label="Retour"  (click)="switchBackCard()" size="small" severity="secondary"></p-button>
+                    </div>
+                    <div class="flex align-items-center justify-content-center">
+                        <p-button label="Se connecter" [loading]="loading[1]" (click)="login()" size="small" [style]="{'background-color': '#0c5b84'}"></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Interface saisie du code sécurité -->
+    <div *ngIf="currentCard === 'code_card'" class="code-card">
+        <div class="card-content">
+            <div class="brand">
+                <a class="logo">
+                    <img class="logo-image" src="assets/images/pgh-logo.png" />
+                    <span class="cmpy-name">poulina <span class="cmpy-name-dc">group </span> holding</span>
+                </a>
+            </div>
+            <div class="content">
+
+                <div class="sign-in-title">Vérification de l'identité</div>
+                <div class="text">Saisissez le code envoyé </div>
+
+                <input pInputText type="text" class="w-12 mt-3" placeholder="Code de verification" [(ngModel)]="verificationCode"  #verifCodeInput="ngModel"  required />
+                <div *ngIf="verifCodeInput.invalid && (verifCodeInput.dirty || verifCodeInput.touched)" class="text-red-500 mt-1 text-sm flex items-center">
+                    <i class="fa-solid fa-circle-exclamation fa-beat-fade mt-2"></i> 
+                    <div *ngIf="verifCodeInput.errors.required" class="m-2">Le code verification est requis.</div>
+                </div>
+                <div class="button-container-code">
+                    <button mat-raised-button class="next" (click)="switchBackCard()">Retour</button>
+                    <button mat-raised-button class="next" (click)="checkVerififcationCode()" style="background-color: #0c5b84; color: #F5F5F5">Suivant</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Interface création du nouveau mot de passe -->
+    <div *ngIf="currentCard === 'init_pwd'" class="init-pwd-card">
+        <div class="brand">
+            <a class="logo">
+                <img class="logo-image" src="assets/images/pgh-logo.png" />
+                <span class="cmpy-name">poulina <span class="cmpy-name-dc">group</span> holding</span>
+            </a>
+        </div>
+
+        <div class="content">
+            <div class="sign-in-title">Créer un mot de passe</div>
+
+            <div class="text" >Saisir un nouveau mot de passe</div>
+            
+            <p-password [(ngModel)]="newPassword" class="w-12rem mt-1" [toggleMask]="true" #newpasswordInput="ngModel" required></p-password>
+            <div *ngIf="newpasswordInput.invalid && (newpasswordInput.dirty || newpasswordInput.touched)" class="text-red-500 mt-1 text-sm flex items-center">
+                <i class="fa-solid fa-circle-exclamation fa-beat-fade mt-2 mr-2"></i> 
+                <div *ngIf="newpasswordInput.errors.required" class="mt-2 mr-2">Le mot de passe est requis.</div>
+            </div>
+
+            <div class="text">Confirmer le mot de passe</div>
+            <p-password [(ngModel)]="confirmPassword" class="p-password-input w-12rem mt-1"  [feedback]="false" #confirmpasswordInput="ngModel" required ></p-password>
+            <div *ngIf="confirmpasswordInput.invalid && (confirmpasswordInput.dirty || confirmpasswordInput.touched)" class="text-red-500 mt-1 text-sm flex items-center">
+                <i class="fa-solid fa-circle-exclamation fa-beat-fade mt-2 mr-2"></i> 
+                <div *ngIf="confirmpasswordInput.errors.required" class="mt-2">Veuillez confirmer le mot de passe.</div>
+            </div>
+            <div class="button-container-pwd">
+                <button mat-raised-button class="next" (click)="switchBackCard()">Retour</button>
+                <button mat-raised-button class="next" (click)="checkPassword(newPassword,confirmPassword)" style="background-color: #0c5b84; color: #F5F5F5">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <img class="background" src="assets/images/background-image.jpg" alt="Background Image" />
+</div>

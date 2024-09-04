@@ -1,0 +1,25 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-4">
+        <label>Certification:</label>
+        <input pInputText type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>Validité jusqu'au:</label>
+        <input pInputText type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-2 mt-4">
+        <p-button icon="pi pi-check" styleClass="p-2" (click)="addNewRow()"/>
+    </div>
+</div>
+<div *ngFor="let row of rows; let i = index" class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-4">
+        <label>Certification:</label>
+        <input pInputText type="text" class="p-2" [(ngModel)]="rows[i].certification">
+    </div>
+    <div class="field col-12 md:col-4">
+        <label>Validité jusqu'au:</label>
+        <input pInputText type="text" class="p-2" [(ngModel)]="rows[i].validity">
+    </div>
+</div>
+
+

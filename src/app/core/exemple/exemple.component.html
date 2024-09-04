@@ -1,0 +1,23 @@
+<p>exemple works!</p>
+
+<table style="width:100%">
+    <tr>
+        <td>
+
+            <div class="card flex justify-content-center">
+                <p-dropdown 
+                    [options]="cities" 
+                    [filter]="true"
+                    [(ngModel)]="selectCity"
+                    optionLabel="name"
+                    optionValue="code"
+                    placeholder="Select a City" />
+            </div>
+
+        </td>
+        <td>
+            {{selectCity}}
+        </td>
+        <td>{{"texte" | translate}} </td>
+    </tr>
+</table>

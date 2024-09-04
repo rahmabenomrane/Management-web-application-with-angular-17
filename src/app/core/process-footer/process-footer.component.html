@@ -1,0 +1,11 @@
+<div class="formgrid flex">
+    <div class="field col" style="flex-basis:55%;">
+         <input id="comment" type="text" placeholder="Commentaire" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+    </div>
+    <div class="field col justify-content-end">
+        <div class="p-inputgroup p-flex p-col-6">
+            <p-dropdown [options]="processDecision" placeholder="Décision" [style]="{width: '100%', padding: '0.25rem'}" size="sm" optionLabel="decisionName"></p-dropdown>
+            <button type="button" pButton icon="pi pi-check" class="p-button-primary" [style]="{padding: '0.25rem'}" size="sm" (click)="onValidateButton()"></button>
+          </div>
+    </div>
+</div>

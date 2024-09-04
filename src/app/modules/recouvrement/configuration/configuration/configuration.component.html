@@ -1,0 +1,237 @@
+<h1 style="font-size:2em;text-align:center;"><strong>Gérer les scénarios de relance</strong></h1>
+<p-tabView>
+    <p-tabPanel header="Scénarios de relance">
+        <div style="text-align:left;">
+            <div class="card flex">
+                <p-floatLabel>
+                    <p-autoComplete 
+                        [(ngModel)]="scenarioFilterValue" 
+                        [suggestions]="scenariosOptions" 
+                        (completeMethod)="getScenariosFilter($event)" 
+                        inputId="float-label" />
+                    <label for="float-label">Scenario</label>
+                </p-floatLabel>
+                <!-- <p-floatLabel>
+                    <p-autoComplete 
+                        [(ngModel)]="actionFilterValue" 
+                        [suggestions]="actionsOptions" 
+                        (completeMethod)="getAcionsFilter($event)" 
+                        inputId="float-label" />
+                    <label for="float-label">Action</label>
+                </p-floatLabel> -->
+                <p-button icon="pi pi-search" (click)="loadScenarios($event)"/>
+            </div>
+        </div>
+        <div style="text-align:right;">
+        <p-button label="Nouveau Scénario de relance " (click)="showDialog()" [text]="true" [raised]="true" severity="secondary" icon="pi pi-plus" [style]="{'margin':'20px'}"/>
+        <p-splitButton severity="secondary" label="Ajouter un Scénario pré-defini"  [model]="items" icon="pi pi-plus" [style]="{'margin':'20px'}"/>
+        </div>
+
+        <p-table
+            [value]="scenarios"  
+            rowGroupMode="rowspan" 
+            sortField="scenarioId"
+            sortMode="single" 
+            groupRowsBy="scenarioId" 
+            [scrollable]="true"
+            scrollHeight="550px" 
+            > 
+            <ng-template pTemplate="header"> 
+                <tr> 
+                    <th> Scénario de relance</th> 
+                    <th> Actions du scénario de relance</th> 
+                    <th> </th> 
+                </tr> 
+            </ng-template> 
+            
+            <ng-template pTemplate="body" 
+                let-scenarios
+                let-rowIndex="rowIndex" 
+                let-rowgroup="rowgroup" 
+                let-rowspan="rowspan"> 
+                <tr class="h-15rem">
+                    <td *ngIf="rowgroup" [attr.rowspan]="rowspan" style="font-size:1.2em;width: 20%;" class="relative px-2 py-2">
+                        <div class="absolute top-0 left-0 pb-10 pt-2 " >
+                            {{scenarios.scenarioName}} 
+                            <br>
+                            <p style="font-size: small;" class="pb-2"> {{nbClientUse}} clients utilisent ce scénario de relance </p>
+                            <p-button (click)="showDialogUpdate(scenarios.scenarioName, scenarios.scenarioId, scenarios.isStandard)" [text]="true" [raised]="true" severity="secondary" icon="pi pi-pencil" class="m-2 "/>
+                            <p-button [text]="true" [raised]="true" severity="secondary" icon="pi pi-trash" class="m-2" (click)="deleteScenario(scenarios.scenarioId)" />
+                            <p-button [text]="true" [raised]="true" severity="secondary" icon="pi pi-copy" class="m-2 " (click)="showDialogDuplicate(scenarios.scenarioId)"/>
+                        </div>
+                    </td> 
+                    <td class="button-cell h-15rem" style="width: 60%;" [ngStyle]="{'height': (scenarios.length > 1) ? '60px' : '120px'}">
+                        {{scenarios.actionName}} 
+                    </td> 
+                    <td *ngIf="rowgroup" (click)="showDialogAction()" [attr.rowspan]="rowspan" class="relative mx-3 my-3 md:my-0 border-round" style="width: 20%;">
+                            <p-button label="Ajouter une action " severity="primary" icon="pi pi-plus" class="absolute top-0 right-0 
+                             font-bold flex border-round"
+                            [style]="{'width':'max-content', 'margin':'10px'}"/>
+                    </td> 
+                </tr> 
+            </ng-template> 
+        </p-table> 
+    </p-tabPanel>
+    <p-tabPanel header="Préférences" leftIcon="pi pi-cog">
+
+        <div class="field grid mt-3">
+            <label class="col-4" >Minimum de relance :</label>
+            <div class="col-8">
+                <input id="minRelance" type="text" class="mb-4 w-full" pInputText />
+            </div>
+        </div>
+        <div class="field grid">
+            <label class="col-4" >Ignorer les pièces dont le montant est inférieur à :</label>
+            <div class="col-8">
+                <input id="infAmount" type="text"  class="mb-4 w-full" pInputText />
+            </div>
+        </div>
+        <div class="field grid">
+            <div class="col-6">
+                <label for="relanceAutomin" class="font-semibold w-6rem">Relance automatique entre </label>
+                <p-dropdown [options]="relancehour" optionValue="relancehour" optionLabel="relancehourLabel" id="relanceAutomin"  autocomplete="off" />
+                <label for="relanceAutomax" class="font-semibold w-6rem"> et </label>
+                <p-dropdown [options]="relancehour" optionValue="relancehour" optionLabel="relancehourLabel" id="relanceAutomax"  autocomplete="off" />
+            </div>
+            <div *ngFor="let day of days" class="flex align-items-center">
+                <p-checkbox 
+                    [label]="day.name" 
+                    name="group" 
+                    [value]="day" />
+            </div>
+        </div>
+        <div class="field grid">
+            <button label="Valider" pButton 
+            pRipple icon="pi pi-check" class="p-button-success" (click)="visible = false" > </button>
+        </div>
+    </p-tabPanel>
+</p-tabView>
+<p-dialog header="Nouveau scénario de relance" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+    <div class="grid grid-cols-4 gap-4 mt-3">
+        <label for="name" class="font-semibold w-6rem">Nom*:</label>
+        <div class="col-span-3">
+            <input id ="name" type="text" [(ngModel)]= "nameScToAdd" class=" w-full" pInputText />
+        </div>
+    </div>
+    <p-checkbox 
+        label="Standard" 
+        binary="true" 
+        [(ngModel)]="standard"
+        (ngModelChange) ="standardCheckBox($event)"/>
+    <div class="flex-1 h-4rem font-bold text-center p-4 border-round mx-4">
+        <button label="Ajouter" pButton 
+        pRipple icon="pi pi-plus" class="p-button-success ml-2" (click)="saveScenario('add')" > </button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Modifier un scénario de relance" [modal]="true" [(visible)]="visibleUpdate" [style]="{ width: '35rem'}" >
+    <div [style]="{ display: 'none'}">
+        <div>
+            <input id ="name" type="text" [value]="idSc" class=" w-full" pInputText />
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4 mt-3">
+        <label for="name" class="font-semibold w-6rem">Nom*:</label>
+        <div class="col-span-3">
+            <input id ="name" type="text" [(ngModel)]="scName" class=" w-full" pInputText />
+        </div>
+    </div>
+    <p-checkbox 
+        label="Standard" 
+        binary="true" 
+        [(ngModel)]="standard"
+        (ngModelChange) ="standardCheckBox($event)"/>
+    <div class="flex-1 h-4rem 
+     font-bold text-center p-4 border-round mx-4">
+        <button label="Renommer" pButton 
+        pRipple icon="pi pi-check" class="p-button-success" (click)="saveScenario('update')" > </button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Dupliquer un scénario de relance" [modal]="true" [(visible)]="visibleDuplicate" [style]="{ width: '35rem' }">
+    <div class="grid grid-cols-4 gap-4 mt-3">
+        <label for="name" class="font-semibold w-6rem">Nom*:</label>
+        <div class="col-span-3">
+            <input id ="name" type="text" [(ngModel)]= "nameScToDuplicate" class=" w-full" pInputText />
+        </div>
+    </div>
+    <div class="flex-1 h-4rem 
+     font-bold text-center p-4 border-round mx-4">
+        <button label="Dupliquer" pButton 
+        pRipple icon="pi pi-plus" class="p-button-success" (click)="duplicateScenario()" > </button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Ajouter une action" [modal]="true" [(visible)]="show" [style]="{ width: '45rem', height:'50rem' }">
+    <div class="field grid mt-3">
+        <label class="col-fixed" style="width:100px">Nom de l'action</label>
+        <div class="col">
+            <input pInputText id="actionName" autocomplete="off" type="text" [style]="{ width: '100%'}" >
+        </div>
+    </div>
+    <div class="field grid">
+        <label class="col-fixed" style="width:100px">Nombre de jours</label>
+        <div class="col">
+            <p-dropdown  id="nbJrs" [style]="{'minWidth':'100%', 'margin-bottom':'1rem'}"  autocomplete="off"/>
+        </div>
+    </div>
+    <div class="field grid">
+        <label class="col-fixed" style="width:100px">Type d'action</label>
+        <div class="col">
+            <p-dropdown [style]="{'minWidth':'100%', 'margin-bottom':'1rem'}"  (onChange)="selectActionType($event)" [options]="actionTypeOptions" optionValue="actionTypeId" optionLabel="actionTypeName" id="actionType" autocomplete="off"/>
+        </div>
+    </div>
+
+
+    <!-- <div class="grid grid-cols-4 gap-4">
+        <label for="actionName" class="font-semibold w-6rem">Nom de l'action</label>
+        <div class="col-span-3">
+            <input pInputText id="actionName" class="mb-4 w-full"  autocomplete="off" />
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+        <label for="nbJrs" class="font-semibold w-6rem">Nombre de jours</label>
+        <div class="col-span-3">
+            <p-dropdown  id="nbJrs" [style]="{'minWidth':'100%', 'margin-bottom':'1rem'}"  autocomplete="off"/>
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+        <label for="actionType" class="font-semibold w-6rem">Type d'action</label>
+        <div class="col-span-3">
+            <p-dropdown [style]="{'minWidth':'100%', 'margin-bottom':'1rem'}"  (onChange)="selectActionType($event)" [options]="actionTypeOptions" optionValue="actionTypeId" optionLabel="actionTypeName" id="actionType" autocomplete="off"/>
+        </div>
+    </div> -->
+    <div *ngIf="showDiv">
+        <div class="grid grid-cols-1 gap-1">
+            <p-messages 
+            [(value)]="messages" 
+            [enableService]="false" 
+            [closable]="false" 
+            class="mb-4 w-full" />
+        </div>
+        <div class="grid grid-cols-4 gap-4">
+            <label for="subject" class="font-semibold w-6rem">Sujet</label>
+            <div class="col-span-3">
+                <input pInputText id="subject" class="mb-4 w-full"  autocomplete="off" />
+            </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4">
+            <label for="emailContent" class="font-semibold w-6rem">Message</label>
+            <div class="col-span-3">
+                <p-editor [style]="{ height: '200px' }" />
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 h-4rem 
+     font-bold text-center p-4 border-round mx-4">
+        <button label="Ajouter" pButton 
+        pRipple icon="pi pi-plus" class="p-button-success" (click)="show = false; showDiv = false" > </button>
+    </div>
+</p-dialog>
+<p-confirmDialog 
+        key="positionDialog" 
+        [position]="position" 
+        rejectButtonStyleClass="p-button-outlined"
+        acceptLabel = "OUI" 
+    rejectLabel = "NON" />
+<p-toast />

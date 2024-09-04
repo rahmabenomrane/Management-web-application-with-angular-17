@@ -1,0 +1,37 @@
+.flex-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background-color: var(--surface-ground); 
+    color: var(--primary-color); 
+    font-weight: bold;
+    border-radius: 0.40rem;
+    border: 1px solid var(--primary-color); 
+    margin: 0.5rem;
+}
+
+.flex-item-module {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background-color: var(--surface-ground);
+    color: var(--text-color);
+    font-weight: bold;
+    border-radius: 0.40rem;
+    margin: 0.5rem;
+    transition: background-color 0.3s ease; 
+}
+
+.flex-item-module:hover {
+    background-color: var(--primary-color);
+    color: var(--surface-ground);
+}
+.small-font{
+    font-size: smaller;
+}
+
+.button-group {
+    padding: 0 !important;
+}

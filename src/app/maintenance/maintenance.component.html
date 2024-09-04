@@ -1,0 +1,203 @@
+<div class="button-container">
+  <div class="button-container" style="text-align: right; margin-bottom: 10px;">
+    <p-button *ngIf="isEditing " icon="pi pi-pencil" (click)="onEdit()"
+      class="p-button-rounded p-button-text"></p-button>
+    <p-button icon="pi pi-trash" (click)="onDelete()" class="p-button-rounded p-button-text"></p-button>
+    <p-button icon="pi pi-refresh" (click)="reloadPage()" class="p-button-rounded p-button-text"></p-button>
+    <p-button *ngIf="!isEditing " (click)="onSave()" class="p-button-rounded p-button-text"><i class="pi pi-plus"
+        style="font-size: 1rem"></i> </p-button>
+
+    <p-button *ngIf="isEditing && show" (click)="onSave()" class="p-button-rounded p-button-text">Enregistrer</p-button>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="form-container">
+    <div class="grid" style="margin-top: 20px; margin-left: 10px;">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label for="nombreMenu">{{"Nombre Menu" |translate}}</label>
+          <input [(ngModel)]="nombreMenu" type="number" class="custom-input" name="nombreMenu"
+            inputId="withoutgrouping" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+
+          <label for="module">Module</label>
+
+          <input name="module" type="number" aria-describedby="username-help" class="custom-input"
+            [(ngModel)]="module" />
+
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="selection">Selection</label>
+          <input [(ngModel)]="selection" type="number" class="custom-input" name="selection" />
+
+
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="nom">{{"Nom"| translate}}</label>
+          <input name="nom" type="text" pInputText [(ngModel)]="nom" class="custom-input" name="nom" />
+
+
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="type" class="mb-2rem">Type</label>
+          <input name="type" pInputText [(ngModel)]="selectedtype" class="custom-input" name="type" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="libelle">{{"Libellé" |translate}}</label>
+          <input name="libelle" type="text" pInputText [(ngModel)]="libelle" class="custom-input" name="libelle" />
+
+
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="procedureExecuter">{{"Procédure à exécutée" | translate}}</label>
+          <input name="procedureExecuter" type="text" pInputText class="custom-input" [(ngModel)]="procedureExecuter"
+            name="procedureExecuter" />
+
+
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="typeAcces">{{"Type Accès" |translate}}</label>
+          <input name="typeAcces" type="text" pInputText [(ngModel)]="typeAcces" class="custom-input"
+            name="typeAcces" />
+
+
+        </div>
+
+
+
+        <div class="field col-12 md:col-6">
+          <label for="newplatform">{{"Nouvelle Plateforme" | translate}}</label>
+          <p-checkbox binary="true" [(ngModel)]="newplatform" name="newplatform"></p-checkbox>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="accesUniversel">{{"Accès universel" |translate}}</label>
+          <p-checkbox binary="true" [(ngModel)]="accesUniversel" name="accesUniversel"></p-checkbox>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="btn-role">
+      <!-- Bouton pour ouvrir le formulaire d'ajout de l'utilisateur   -->
+      <button pButton type="button" icon="pi pi-plus"(click)="showAddUserDialog()" [disabled]="!selectedItem || selecteduser"><label> {{"Utilisateur" |translate}} </label></button>
+      <button pButton type="button" icon="pi pi-trash"  [disabled]="!selecteduser" (click)="deleteUser(selecteduser)" ><label> {{"Utilisateur" |translate}} </label></button>
+  </div>
+    <p-scrollPanel [style]="{ width: '100%', height: '400px' }" styleClass="custom">
+      <div class="user-container">
+     
+          <p-table [value]="filteredUsers"  selectionMode="single">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>{{"Role id" |translate}} </th>
+                    <th>{{"User id" |translate}} </th>
+                    <th>{{"Can run" | translate }}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+                <tr (click)="selectuser(user)">
+                    <td>{{ user.menuAccess_role_id }}</td>
+                    <td>{{ user.menuAccess_user_id }}</td>
+                    <td>
+                        <p-checkbox [(ngModel)]="user.menuAccess_canRun" [binary]="true"
+                            disabled="true"></p-checkbox>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="5">{{"No users found"| translate}}</td>
+              </tr>
+          </ng-template>
+        </p-table>
+      </div>
+  </p-scrollPanel>
+  <p-dialog header="Ajouter Utilisateur" [(visible)]="addUserDialogVisible" [modal]="true" [closable]="false">
+    <div class="field">
+      <label for="menuAccess_user_id">User ID</label>
+      <input id="menuAccess_user_id" type="text" pInputText [(ngModel)]="menuAccess_user_id" />
+    </div>
+    
+    <div class="field">
+      <label for="menuAccess_role_id">Role ID</label>
+      <input id="menuAccess_role_id" type="text" pInputText [(ngModel)]="menuAccess_role_id" />
+    </div>
+    <div class="field">
+      <label for="menuAccess_canRun">Can Run</label>
+      <p-checkbox id="menuAccess_canRun" [(ngModel)]="menuAccess_canRun" binary="true"></p-checkbox>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Enregistrer" icon="pi pi-check" (click)="addUser()"></button>
+      <button pButton type="button" label="Annuler" icon="pi pi-times" (click)="addUserDialogVisible = false"></button>
+    </p-footer>
+  </p-dialog>
+  </div>
+  <p-toast></p-toast>
+
+
+
+
+  <!---->
+  <div class="grid">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="offset-md-8 col-md-4">
+          <!-- Filtres -->
+          <div class="filters-container">
+            <div class="filters">
+              <!-- Filtre par module -->
+              <div class="field p-mx-2 p-my-1">
+                <input type="text" pInputText [(ngModel)]="moduleFilter" [placeholder]="('FILTER_BY_MODULE' | translate)">
+            </div>
+            
+              <!-- Filtre par nom -->
+              <div class="field p-mx-2 p-my-1">
+                <input type="text" pInputText [(ngModel)]="nomFilter" [placeholder]="('FILTER_BY_NOM' | translate)">
+            </div>
+            <div class="field p-mx-2 p-my-1">
+                <input type="text" pInputText [(ngModel)]="nombreMenuFilter" [placeholder]="('FILTER_BY_NOMBRE_MENU' | translate)">
+            </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Menu -->
+        <p-scrollPanel [style]="{ width: '100%', height: '400px' }" styleClass="custom">
+          <div class="menu-container" selectionMode="single">
+            <p-orderList [value]="filterInfos()" header="Menu">
+              <ng-template let-info pTemplate="item">
+                <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectItem(info)">
+                  <div class="flex-1 flex flex-column gap-2">
+                    <span class="font-bold">nom menu: {{ info.menu_name }}</span>
+                    <div class="flex align-items-center gap-2">
+                      <span>{{ info.menu_nbr }}:</span>
+                      <span>{{ info.menu_module }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-orderList>
+          </div>
+
+        </p-scrollPanel>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>

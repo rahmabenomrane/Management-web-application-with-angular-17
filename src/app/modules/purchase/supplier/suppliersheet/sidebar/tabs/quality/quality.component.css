@@ -1,0 +1,31 @@
+/*/* input-fields.component.css */
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 2%px 0;
+}
+
+.row1 {
+    width: 60%;
+}
+
+.mat-form-field {
+    width: 50%;
+}
+
+.field3 {
+    margin-right: 9%;
+}
+
+.add-btn {
+    margin-bottom: 2%;
+    margin-top: 2%;
+}

@@ -1,0 +1,30 @@
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.card-header {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.card-header-text {
+    flex: 1;
+}
+
+.card-content {
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.collapsed {
+    max-height: 0;
+}

@@ -1,0 +1,81 @@
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.scss';
+@import 'assets/showcase/styles/primeng.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    margin: 0;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    /* font-size: .875rem; */
+}
+
+header-bar {
+    position: absolute;
+    width: calc(100%);
+    padding-left: 48px;
+}
+
+app-root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+app-body {
+    width: 100%;
+    height: calc(100% - 55px - 17px);
+    white-space: normal;
+    position: absolute;
+    top: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+status-bar {
+    width: 100%;
+    height: 22px;
+    white-space: normal;
+    position: absolute;
+    top: calc(100% - 22px);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--surface-ground);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.layout-wrapper.layout-static .layout-main-container {
+   margin-left: 16%; 
+}
+
+.layout-wrapper.layout-static.layout-static-inactive .layout-sidebar {
+    transform: translateX(-100%);
+    left: 0;
+}
+
+.layout-wrapper.layout-static.layout-static-inactive .layout-main-container {
+    margin-left: 0;
+}

@@ -1,0 +1,49 @@
+<router-outlet></router-outlet>
+
+<p-card header="Process à démarrer" styleClass="h-full">
+    <div class="flex gap-4">
+        <div class="flex-1 justify-content-left">
+            <ng-container *ngIf="!noData; else noDataTemplate">
+                <p-table [value]="processList" selectionMode="single" [(selection)]="selectedProcess" dataKey="processId" 
+                (onRowSelect)="onRowSelect(selectedProcess)"  rowGroupMode="subheader" groupRowsBy="processModule" sortField="processModule" 
+                sortMode="single" (onSort)="onSort()" responsiveLayout="scroll" [scrollable]="true" scrollHeight="70vh" [loading]="loading">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>ID</th>
+                            <th>Process Name</th>
+                            <th>Process Description</th>
+                        </tr>
+                    </ng-template>
+                    
+                    <ng-template pTemplate="body" let-process let-rowIndex="rowIndex" >
+                        <tr pRowGroupHeader *ngIf="rowGroupMetadata[process.processModule].index === rowIndex" class="subheader-row">
+                            <td colspan="3" style="min-width: 200px;">
+                                <span class="font-bold ml-2">{{process.processModule}}</span>
+                            </td>
+                        </tr>
+                        <tr [pSelectableRow]="process">
+                            <td style="min-width: 200px;">
+                                {{process.processId}}
+                            </td>
+                            <td style="min-width: 200px;">
+                                {{process.processName}}
+                            </td>
+                            <td style="min-width: 200px;">
+                                {{process.processDesc}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-container>
+
+            <ng-template #noDataTemplate>             
+                <div class="no-data-message">
+                    <p>Pas de données à afficher.</p>
+                </div>               
+            </ng-template>
+        </div> 
+    </div>
+</p-card>
+
+
+

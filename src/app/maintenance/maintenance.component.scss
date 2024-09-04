@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.form-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.menu-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  margin-top: 50px;
+
+}
+
+.button-container {
+  position: relative;
+  top: 40px;
+  margin-left: 500px;
+  display: flex;
+  gap: 10px;
+}
+
+.form-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+
+/* CSS pour masquer les boutons de contrôle d'ordre */
+/* Masquer les boutons de contrôle d'ordre dans p-orderList de PrimeNG */
+::ng-deep .p-orderlist-controls {
+  display: none !important;
+  /* Masquer les boutons de contrôle */
+}
+
+.custom-input {
+  width: 100%;
+  /* Largeur à 100% du champ d'entrée */
+  padding: 10px;
+  /* Espacement intérieur du champ d'entrée */
+  border: 1px solid #ccc;
+  /* Bordure grise autour du champ d'entrée */
+  border-radius: 4px;
+  /* Coins arrondis du champ d'entrée */
+  color: #070707;
+  /* Couleur du texte dans le champ d'entrée */
+  /*  background-color: #fff;  Couleur de fond du champ d'entrée */
+  outline: none;
+  /* Supprime la bordure bleue lors du focus */
+}
+
+.custom-input:focus {
+  border-color: #858484;
+  /* Couleur de bordure bleue lors du focus */
+}
+
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  margin-top: 90px;
+}
+.sousroles .p-datatable-scrollable-body {
+  max-height: 200px; /* Taille maximale du corps de la table */
+  overflow-y: auto; /* Ajoute une barre de défilement verticale */
+}
+
+.sousroles .p-datatable-scrollable-header,
+.sousroles .p-datatable-scrollable-footer {
+  overflow: hidden; /* Empêche le défilement des en-têtes et pieds de page */
+}
+.p-table {
+  display: block;
+  height: 100%;
+  overflow-y: auto; /* Ajoute une barre de défilement verticale */
+}
+
+
+p-checkbox {
+  pointer-events: auto; /* Assurez-vous que les événements sont autorisés */
+}

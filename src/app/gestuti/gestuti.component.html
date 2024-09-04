@@ -1,0 +1,398 @@
+<div class="container">
+    <div>
+        <div class="btn-role">
+            <!-- Bouton pour ouvrir le formulaire d'ajout de rôle -->
+            <button pButton type="button" icon="pi pi-plus" (click)="showAddRoleDialog()"
+                [disabled]="selectedRole"></button>
+            <button pButton type="button" icon="pi pi-pencil" (click)="editRole()" [disabled]="!selectedRole"></button>
+            <button pButton type="button" icon="pi pi-trash" (click)="deleteRole()" [disabled]="!selectedRole"></button>
+        </div>
+        <!--menu des roles -->
+        <p-scrollPanel [style]="{ width: '100%', height: '400px' }" styleClass="custom">
+            <div class="menu-container">
+                <p-orderList [value]="roles" class="role-details" filterBy="role_id" selectionMode="single"
+                    [filterPlaceholder]="('FILTER_BY_role' | translate)" (dblclick)="roleDoubleClick()" [(ngModel)]="nomFilter">
+                    <ng-template let-role pTemplate="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectItem(role)">
+                            <div class="flex-1 flex flex-column gap-2">
+                                <span class="font-bold">{{ role.role_id }}</span>
+                                <div class="flex align-items-center gap-2">
+                                    <span>{{ role.role_desc }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-orderList>
+            </div>
+        </p-scrollPanel>
+
+        <!-- Dialog pour ajouter un rôle -->
+        <div class="form-role">
+            <p-dialog header="Edit Role" [(visible)]="displayAddRoleDialog || displayroleDetailsDialog"
+                [closable]="false" (onHide)="resetNewRole()">
+                <div class="p-grid">
+                    <div class="p-fluid">
+                        <div class="p-col-12 md:col-6" style="width: 100%;">
+                            <div class="p-field">
+                                <label for="idrole">ID Rôle</label>
+                                <input id="idrole" type="text" pInputText [(ngModel)]="idrole"
+                                    [disabled]="roleFormDisabled" />
+                            </div>
+                        </div>
+                        <div class="p-col-12 md:col-6" style="width: 100%;">
+                            <div class="p-field">
+                                <label for="description">Description</label>
+                                <input id="description" type="text" pInputText [(ngModel)]="description"
+                                    [disabled]="roleFormDisabled" />
+                            </div>
+                        </div>
+                        <div class="p-col-12 md:col-6" style="width: 100%;">
+                            <div class="p-field">
+                                <label for="module">Module</label>
+                                <p-dropdown [options]="modules" [(ngModel)]="module" optionLabel="module_name"
+                                    optionValue="module_id" placeholder="Select a Module"
+                                    [disabled]="roleFormDisabled"></p-dropdown>
+                            </div>
+                        </div>
+
+
+                        <div class="p-col-12 md:col-6" style="width: 100%;">
+                            <div class="p-field" *ngIf="checkedsyn" [disabled]="roleFormDisabled">
+                                <label for="sousrole">Ajouter Sous-Rôles</label>
+                                <div class="input-checkbox-container p-d-flex p-ai-center">
+                                    <input id="sousrole" type="text" pInputText [(ngModel)]="newSousRole.nom"
+                                        class="p-mr-2" [disabled]="roleFormDisabled" />
+                                    <div class="p-field-checkbox p-mr-2">
+                                        <label for="synchronizer">Synchroniser</label>
+                                        <p-checkbox [(ngModel)]="newSousRole.synchroniser" [binary]="true"
+                                            inputId="synchronizer" [disabled]="roleFormDisabled"></p-checkbox>
+                                    </div>
+                                </div>
+                                <button pButton type="button" label="Add Sous-Role" icon="pi pi-plus"
+                                    (click)="addSousRole()" style="width: 100%; margin-top: 8px"
+                                    [disabled]="roleFormDisabled"></button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="p-field" *ngIf="sousroles?.length">
+
+                            <p-table [value]="sousroles" (click)="showRoleDetails()" selectionMode="single">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Nom Sous-Rôle</th>
+                                        <th>Synchroniser</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-sousrole>
+                                    <tr>
+                                        <td>{{ sousrole.nom }}</td>
+                                        <td>
+                                            <p-checkbox [(ngModel)]="sousrole.synchroniser" [binary]="true"
+                                                disabled="true"></p-checkbox>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+
+                    </div>
+
+                    <p-footer>
+                        <div class="save-btnROLE">
+                            <button pButton type="button" icon="pi pi-check" label="Save" (click)="onSaveRole()"
+                                [disabled]="roleFormDisabled"></button>
+                            <button pButton type="button" icon="pi pi-times" label="Cancel"
+                                (click)="closeAddRoleDialog()"></button>
+                        </div>
+                    </p-footer>
+                </div>
+            </p-dialog>
+        </div>
+    </div>
+
+    <!--usersection-->
+    <div>
+       
+            <div class="button-container">
+                <!-- Bouton Ajouter Utilisateur -->
+                <button pButton type="button" (click)="showAddUserDialog()" [disabled]="selectedUser">
+                    <i class="pi pi-plus"></i> 
+                    <span>{{ "Utilisateur" | translate }}</span>
+                </button>
+        
+                <!-- Bouton Supprimer Utilisateur -->
+                <button pButton type="button" (click)="deleteUserRole()" [disabled]="!selectedUser">
+                    <i class="pi pi-trash"></i> 
+                    <span>{{ "Utilisateur" | translate }}</span>
+                </button>
+        
+                <!-- Bouton Modifier Utilisateur -->
+                <button pButton type="button" (click)="showUpdateUserDialog()" [disabled]="!selectedUser" class="update-user-button">
+                    <i class="pi pi-pencil"></i> 
+                    <span>{{ "Utilisateur" | translate }}</span>
+                </button>
+         
+        
+            <div class="form_user">
+                <p-dialog header="Ajouter/Modifier Utilisateur"
+                    [(visible)]="displayAddUserDialog || displayUserDetailsDialog" [modal]="true" [closable]="false">
+                    <div class="p-fluid">
+                        <div class="field col-12 md:col-6" style="width: 100%;">
+                            <label for="username">Utilisateur</label>
+                            <input id="username" name="username" type="text" pInputText [(ngModel)]="username"
+                                class="custom-input" [disabled]="userFormDisabled" />
+                        </div>
+
+                        <div class="field col-12 md:col-6" style="width: 100%;">
+                            <label for="entite">Entité</label>
+                            <input id="entite" name="entite" type="text" pInputText [(ngModel)]="entite"
+                                class="custom-input" [disabled]="userFormDisabled" />
+                        </div>
+                        <div class="field col-12 md:col-6" style="width: 100%;">
+                            <label for="interim">Interim</label>
+                            <input id="interim" name="interim" type="text" pInputText [(ngModel)]="interim"
+                                class="custom-input" [disabled]="userFormDisabled" />
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label for="accessSiege">Accès siège</label>
+                            <p-checkbox id="accessSiege" name="accessSiege" [(ngModel)]="accessSiege" binary="true"
+                                [disabled]="userFormDisabled"></p-checkbox>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label for="configureInterim">Configurer intérim</label>
+                            <p-checkbox id="configureInterim" name="configureInterim" [(ngModel)]="configureInterim"
+                                binary="true" [disabled]="userFormDisabled"></p-checkbox>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label>Repetition d'intérim</label>
+                            <div class="input-checkbox-container p-d-flex p-ai-center">
+                                <div class="input-checkbox-container p-d-flex p-ai-center">
+
+                                    <p-radioButton name="test" label="Quotidien" [(ngModel)]="interimRepetitionquoti"
+                                        [value]="true" binary="true"
+                                        (ngModelChange)="onInterimRepetitionChange('quoti')"
+                                        [disabled]="userFormDisabled"></p-radioButton>
+                                    <p-radioButton name="test" label="Hebdomadaire" [(ngModel)]="interimRepetitionhebdo"
+                                        [value]="true" binary="true"
+                                        (ngModelChange)="onInterimRepetitionChange('hebdo')"
+                                        [disabled]="userFormDisabled"></p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="interimRepetitionquoti " class="field col-12 md:col-6">
+                            <div class="p-grid">
+                                <div class="userformbtn">
+                                    <div class="p-col-1">
+                                        <label>Lun</label>
+                                        <p-checkbox id="monday" name="day" [(ngModel)]="userEntity_interim_day_monday"
+                                            [disabled]="userFormDisabled" binary="true"
+                                            [disabled]="userFormDisabled"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Mar</label>
+                                        <p-checkbox id="tuesday" name="day" [(ngModel)]="userEntity_interim_day_tuesday"
+                                            [disabled]="userFormDisabled" binary="true"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Mer</label>
+                                        <p-checkbox id="wednesday" name="day"
+                                            [(ngModel)]="userEntity_interim_day_wednesday "
+                                            [disabled]="userFormDisabled" binary="true"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Jeu</label>
+                                        <p-checkbox id="thursday" name="day"
+                                            [(ngModel)]="userEntity_interim_day_thursday " [disabled]="userFormDisabled"
+                                            binary="true"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Ven</label>
+                                        <p-checkbox id="friday" name="day" [disabled]="userFormDisabled"
+                                            [(ngModel)]="userEntity_interim_day_friday" binary="true"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Sam</label>
+                                        <p-checkbox id="saturday" name="day" [disabled]="userFormDisabled"
+                                            [(ngModel)]="userEntity_interim_day_saturday" binary="true"></p-checkbox>
+                                    </div>
+                                    <div class="p-col-1">
+                                        <label>Dim</label>
+                                        <p-checkbox id="sunday" name="day" [(ngModel)]="userEntity_interim_day_sunday"
+                                            [disabled]="userFormDisabled" binary="true"></p-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field col-12 md:col-6" style="width: 100%">
+                                <label for="startDate">Date de Début</label>
+                                <p-calendar [(ngModel)]="startDate" [showIcon]="true"
+                                    [disabled]="userFormDisabled"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-6" style="width: 100%;">
+                            <label>Date de Fin</label>
+                            <div class="input-checkbox-container p-d-flex p-ai-center">
+                                <p-radioButton name="showEndDateCalendar" value="showEndDateCalendar"
+                                    [(ngModel)]="showEndDateCalendar" inputId="endDateYes" label="Oui"
+                                    (ngModelChange)="ondatelogChange(true)" [disabled]="userFormDisabled"
+                                    aria-checked="showEndDateCalendar"></p-radioButton>
+                                <p-radioButton name="showEndDateCalendar" value="showEndDateCalendar"
+                                    [(ngModel)]="showEndDateCalendar" inputId="endDateNo" label="Non"
+                                    (ngModelChange)="ondatelogChange(false)" [disabled]="userFormDisabled"
+                                    aria-checked="showEndDateCalendar"></p-radioButton>
+                            </div>
+
+                            <p-calendar *ngIf="showEndDateCalendar" [(ngModel)]="endDate" [showIcon]="true"
+                                [disabled]="userFormDisabled"></p-calendar>
+                        </div>
+
+
+                        <div class="input-checkbox-container p-d-flex p-ai-center">
+                            <div class="save">
+                                <button pButton type="submit" label="Enregistrer" (click)="onSaveUser()"
+                                    [disabled]="userFormDisabled"></button>
+                                <button type="button" pButton icon="pi pi-times" label="Cancel"
+                                    (click)="closeAddUserDialog()"></button>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </p-dialog>
+            </div>
+
+
+        </div>
+        <!--users menu-->
+        <div class="user-container">
+            <div class="card">
+                <p-table #dt2 [value]="users" dataKey="username" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+                    [paginator]="true" selectionMode="single" [(selection)]="selectedUser"
+                    [globalFilterFields]="['filterUsername', 'filterEntite' , 'accessSiege', 'configureInterim','filterInterim']"
+                    [tableStyle]="{ 'min-width': '75rem' }">
+                    <!--(click)="showUserDetails()"-->
+                    <ng-template pTemplate="header">
+
+                        <tr>
+
+                            <th style="width:22%">{{"Utilisateur"| translate}}
+                                <input type="text" pInputText field="userEntity_user_id" [placeholder]="('FILTER_BY_NOM' | translate)" 
+                                    ariaLabel="Filter User" [(ngModel)]="filterUsername"
+                                    (ngModelChange)="filterUsers()" />
+                            </th>
+                            <th style="width:22%">{{"entité" |translate}}
+
+                                <input type="text" pInputText field=" userEntity_entity_id"
+                                [placeholder]="('FILTER_BY_entit' | translate)" ariaLabel="Filter Entity" [(ngModel)]="filterEntite"
+                                    (ngModelChange)="filterUsers()" />
+
+                            </th>
+                            <th style="width:22%">{{"Intérim" |translate}} </th>
+                            <th style="width:22%">{{"Accès Siège" |translate}}</th>
+                            <th style="width:12%">{{"Configurer Intérim" |translate}}
+                                <input type="checkbox" [(ngModel)]="filterInterimActive"
+                                    (change)="getUsersForRole(selectedRole)" />
+                            </th>
+
+                        </tr>
+
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-user>
+                        <tr [ngClass]="{'selected-row': selectedUser === user}" (click)="onRowSelect(user)"
+                            (dblclick)="onuserDoubleClick()">
+                            <td>{{ user.userEntity_user_id }}</td>
+                            <td>{{ user.userEntity_entity_id }}</td>
+                            <td>{{ user.userEntity_interim }}</td>
+                            <td>
+                                <p-checkbox [binary]="true" [(ngModel)]="user.is_seat"
+                                    (onChange)="onAccesSiegeChange(user, $event.checked)"></p-checkbox>
+                            </td>
+                            <td>
+                                <p-checkbox [binary]="true" [(ngModel)]="user.userEntity_interim_active"
+                                    (onChange)="onConfigInterimChange(user, $event.checked)"></p-checkbox>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage" >
+                        <tr>
+                            <td colspan="5">{{"No users found" | translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+
+        </div>
+
+        <!-- rolesync-list 
+          <ng-template let-role pTemplate="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectItem(role)">-->
+
+        <div class="sousroles">
+            <p-table [value]="syncroles" *ngIf="selectedRole" selectionMode="single" [(selection)]="selectedSyncRole">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>{{"Nom Sous-Rôle" | translate}}</th>
+                        <th>{{"Synchroniser" | translate}}</th>
+                        <th>
+                            <button pButton type="button" icon="pi pi-plus" (click)="showAddsyncDialog()"></button>
+                            <button pButton type="button" icon="pi pi-pencil" (click)="showEditsyncDialog()"
+                                [disabled]="!selectedSyncRole"></button>
+                            <button pButton type="button" icon="pi pi-trash" (click)="deletesyncrole()"
+                                [disabled]="!selectedSyncRole"></button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-syncrole>
+                    <tr (click)="selectsyncItem(syncrole)">
+                        <td>{{ syncrole.roleSync_roleRelated}}</td>
+                        <td>
+                            <p-checkbox [(ngModel)]="syncrole.enabled" [binary]="true" [disabled]="true"></p-checkbox>
+                        </td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">No roles found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+    <p-toast></p-toast>
+    <div class="syncroles">
+        <p-dialog header="Edit Role sync" [(visible)]="displayEditsyncDialog" modal="modal" [style]="{width: '300px'}"
+            [responsive]="true">
+            <div class="p-fluid">
+                <div class="p-field">
+                    <label for="roleSync_roleRelated">Rôle Lié</label>
+                    <input id="roleSync_roleRelated" type="text" pInputText [(ngModel)]="roleSync_roleRelated">
+                </div>
+                <div class="p-field">
+                    <label for="enabled">Activé</label>
+                    <p-checkbox id="enabled" [(ngModel)]="enabled " [binary]="true"></p-checkbox>
+                </div>
+            </div>
+            <p-footer>
+                <div class="btn-sync">
+                    <button type="button" pButton label="Save" icon="pi pi-check" (click)="onsavesync()"></button>
+                    <button type="button" pButton label="Cancel" icon="pi pi-times"
+                        (click)="displayEditsyncDialog = false"></button>
+                </div>
+            </p-footer>
+        </p-dialog>
+    </div>
+
+</div>

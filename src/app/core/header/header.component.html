@@ -1,0 +1,114 @@
+<div class="header">
+
+    <div class="navbar-header"> 
+        <a class="navbar-brand">
+            <img class="navbar-logo" src="\assets\images\pgh-logo.png" />
+            <span class="navbar-cmpy-name">poulina <span class="navbar-cmpy-name-dc">group</span> holding</span>
+        </a>
+    </div>
+   
+    <div #navBarLeft class="navbar-nav-left">
+    </div>
+    <div class="navbar-nav-right">
+        <div #searchContainer class="navbar-item searchContainer">
+            <div class="search">
+                <input type="text" placeholder="Search for anything" (focus)='focusSearch()' (blur)='blurSearch()' />
+                <button class="p-link layout-topbar-button">
+                    <i class="pi pi-times"></i>
+                </button>            
+            </div>
+        </div>
+        <div class="navbar-item" style="margin-right: 20px;">
+            <button class="p-link layout-topbar-button" type="button" (click)="menu.toggle($event)">
+                <div class="card flex justify-content-center pt-1">
+                    <div class="round-image-container" style="width: 22px; height: 22px;">
+                         <img src="{{ pathPhoto }}" class="round-image" alt="Profile Image" /> 
+                    </div>
+                    <div class="card flex justify-content-center mt-1">
+                      <span style="font-size: small; margin-left: 8px;">{{ fullName }}</span>
+                    </div>
+                </div>
+            </button>
+                       
+        </div>
+        
+    </div>
+</div>
+
+<p-menu styleClass="mt-4 ml-2" #menu class="menu" [model]="items" [popup]="true"></p-menu>
+
+<div class="card flex justify-content-center">
+    <p-dialog header="Gérer votre profil" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <div class="edit-button-container">
+            <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-primary p-button-raised edit-icon" (click)="toggleEditMode()"></button>
+        </div>
+        <div class="flex justify-content-center align-items-center position-relative">
+            <div class="round-photo-container">
+              <img [src]="pathPhoto ? pathPhoto : 'pi pi-user'" class="round-photo" alt="Profile Image" />
+            </div>
+          </div>
+          
+        <div class="flex align-items-center justify-content-center">
+            <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+            <span class="p-text-secondary block mb-5 mt-5 align-items-center" (click)="fileInput.click()" style="cursor: pointer;">Changer la photo de profil.</span> 
+        </div>
+
+        
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="username" class="font-semibold w-6rem">Nom d'utilisateur</label>
+            <input pInputText id="username" class="flex-auto" autocomplete="off" [disabled]="!editMode" [(ngModel)]="fullName"/>
+        </div>
+        <div class="flex align-items-center gap-7 mb-5 mr-3rem">
+            <label for="password" class="font-semibold w-6 mr-2rem">Mot de passe</label>
+            <p-password [(ngModel)]="value" [toggleMask]="true" [disabled]="!editMode" [(ngModel)]="password"></p-password>
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Annuler" (click)="closeDialog()" [text]="true" severity="secondary"/>
+            <p-button label="Confirmer" (click)="closeDialog()" [text]="true"/>
+        </div>
+    </p-dialog>
+
+   <!--  <p-dialog [(visible)]="visible">
+        <ng-template pTemplate="headless">
+            <div class="edit-button-container">
+                <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-primary p-button-raised edit-icon" (click)="toggleEditMode()"></button>
+            </div>
+            <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-400), var(--primary-700))">
+
+                <div class="flex justify-content-center align-items-center position-relative">
+                    <div class="round-photo-container ">
+                         <img src="{{pathPhoto}}" class="round-photo" alt="Profile Image" /> 
+                    </div>
+                </div>
+                
+                <span class="editPhotoText" (click)="fileInput.click()">Changer la photo de profil</span>
+                <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+
+
+                <div class="inline-flex flex-column gap-2 usernameField">
+
+                    <label for="username" class="text-primary-50 font-semibold">Nom d'utilisateur</label>
+                    <div class="input-container">
+                        <input pInputText id="username" class="bg-white-alpha-60 border-none p-3 text-primary-900" [disabled]="!editMode" [(ngModel)]="fullName"/>
+                    </div>
+                </div>
+                
+                <div class="inline-flex flex-column gap-2 passwordField">
+                    <label for="password" class="text-primary-50 font-semibold">Mot de passe</label>
+                     <div class="card flex justify-content-center">
+                        <p-password [(ngModel)]="value" [toggleMask]="true" [disabled]="!editMode" [(ngModel)]="password"></p-password>
+                    </div> 
+                </div>
+            
+                
+                <div class="flex align-items-center gap-2">
+                    <p-button label="Confirmer" (click)="closeDialog()" [text]="true" styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+                    <p-button label="Annuler" (click)="closeDialog()" [text]="true"  styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-dialog> -->
+</div>
+
+
+

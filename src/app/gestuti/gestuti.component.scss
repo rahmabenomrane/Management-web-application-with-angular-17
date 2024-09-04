@@ -1,0 +1,39 @@
+/* Masquer les boutons de contrôle d'ordre dans p-orderList de PrimeNG */
+::ng-deep .p-orderlist-controls {
+    display: none !important;
+    /* Masquer les boutons de contrôle */
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    /* pour laisser de l'espace pour les boutons */
+  }
+  /* Styles pour le bouton de suppression */
+.button-container {
+  margin: 30px 0; /* Marge autour des boutons */
+  display: flex;
+  justify-content: flex-start; /* Aligner les boutons à gauche ou au centre */
+  gap: 20px; /* Espacement entre les boutons */
+}
+
+
+/* Styles pour la ligne sélectionnée */
+.selected-row {
+  background-color: #e8f0fe; /* Couleur de fond pour la ligne sélectionnée */
+}
+// Dans votre fichier .scss
+.input-checkbox-container {
+  display: flex;
+  align-items: center; // Aligne les éléments verticalement au centre
+}
+
+.input-checkbox-container .p-inputtext {
+  margin-right: 1rem; // Espace entre l'input et la checkbox
+}
+
+.input-checkbox-container .p-field-checkbox {
+  margin-right: 1rem; // Espace entre la checkbox et le bouton
+}
+
+

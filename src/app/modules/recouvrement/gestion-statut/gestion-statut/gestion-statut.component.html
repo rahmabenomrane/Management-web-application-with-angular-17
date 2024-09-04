@@ -1,0 +1,97 @@
+<h1 style="font-size:2em;text-align:center;"><strong>Gérer les statuts</strong></h1>
+<div class="flex flex-row-reverse flex-wrap">
+    <div class="flex align-items-center justify-content-center ">
+        <p-floatLabel>
+            <p-autoComplete 
+                [(ngModel)]="statusFilter" 
+                [suggestions]="statusOptions" 
+                (completeMethod)="getStatus($event)" 
+                inputId="float-l0abel" />
+            <label for="float-label">Statut</label>
+        </p-floatLabel>
+        <p-button icon="pi pi-search" (click)="loadStatus($event)"/>
+        <!-- <p-iconField iconPosition="left" >
+                <input type="text" pInputText placeholder="Statut"  [(ngModel)]="statusFilter" />
+            </p-iconField> -->
+        <!-- <p-button icon="pi pi-search" (click)="loadStatus($event)"/> -->
+      
+    </div>
+    <div class="flex align-items-center justify-content-center ">
+        <p-button label="Nouveau Statut"  [text]="true" [raised]="true" severity="primary" icon="pi pi-plus" [style]="{'margin':'20px'}" (click)="addStatut()"/>
+    </div>
+</div>
+
+<p-table #dt2 dataKey="statusId" [showCurrentPageReport]="true" [value]="Status" rowGroupMode="rowspan" 
+    sortMode="single"  sortField="statusName" groupRowsBy="statusName"
+    [scrollable]="true" scrollHeight="550px" selectionMode="single" (onRowSelect)="showStatut(selectStatut)" [(selection)]="selectStatut"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]" [lazy]="true"
+    (onLazyLoad)="loadStatus($event)" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="loading"> 
+   
+    <ng-template pTemplate="header"> 
+        <tr> 
+            <th> Statut</th> 
+            <th>Sous Statut</th> 
+        </tr> 
+    </ng-template> 
+    
+    <ng-template pTemplate="body" 
+        let-status
+        let-rowIndex="rowIndex" 
+        let-rowgroup="rowgroup" 
+        let-rowspan="rowspan"> 
+        <tr class="h-5rem" [pSelectableRow]="status">
+            <td *ngIf="rowgroup" [attr.rowspan]="rowspan" class="relative text-lg">
+                <div>
+                    {{status.statusName}} 
+                </div>
+            </td> 
+            <td class="button-cell">
+                {{status.sousStatus}} 
+            </td> 
+        </tr> 
+    </ng-template> 
+</p-table> 
+
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '30%' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center m-2">
+            <h1 style="font-size:2em;text-align:center;" >{{title}}</h1>
+        </div>
+        <div class="field grid">
+            <label class="col-fixed" style="width:100px">Statut:</label>
+            <div class="col">
+                <input pInputText id="SousStLabelatut" class="mb-2 w-full"  autocomplete="off"  [(ngModel)]="SousStLabel" />
+            </div>
+        </div>
+        <div class="field grid">
+            <label class="col-fixed" style="width:100px">Parent:</label>
+            <div class="col">
+                <p-dropdown styleClass="mb-1rem w-12" 
+                [options]="statutList" 
+                (onChange)="selectStatus($event)"
+                [(ngModel)]="selectedSt" 
+                optionValue="statusId" optionLabel="statusName"
+                placeholder="Select a statut"/>
+            </div>
+        </div>
+        <div class="field grid">
+            <label class="col-fixed" style="width:100px">Scénario:</label>
+            <div class="col">
+                <p-dropdown [style]="{'minWidth':'100%', 'margin-bottom':'1rem'}" 
+                    [options]="scenarioList" 
+                    [(ngModel)]="selectedSc" 
+                    optionValue="scenarioId" optionLabel="scenarioName"
+                    placeholder="Select a scenario"/>
+                </div>
+        </div>
+
+        <div class="flex align-items-center justify-content-center gap-3">
+            <p-button [label]="label" [icon]="icon" severity="success" (click)="saveStatut()"/>
+        </div>
+        
+    </div>
+</p-dialog>
+<p-toast />
+
+   
+

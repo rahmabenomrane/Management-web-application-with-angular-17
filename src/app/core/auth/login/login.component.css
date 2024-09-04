@@ -1,0 +1,239 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.username-card {
+  background-color: white;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  position: relative;
+  z-index: 1;
+  padding : 1%; 
+}
+.pwd-card {
+  background-color: white;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  position: relative;
+  z-index: 1;
+  padding :1%; 
+}
+.forgot-pwd-card {
+  background-color: white;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  position: relative;
+  z-index: 1;
+  padding : 1%; 
+  padding-top :2%; 
+
+}
+.code-card {
+  background-color: white;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  position: relative;
+  z-index: 1;
+  padding : 1%; 
+  padding-right : 2%; 
+
+}
+.init-pwd-card {
+  background-color: white;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding : 2%; 
+
+}
+.brand {
+  display: flex;
+  padding-bottom: 2%;
+
+}
+
+.logo {
+  padding: 1% 4%;
+  height: 5%;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 100;
+  font-size: 12px;
+  line-height: 30px;
+  margin: 0;
+  color: #20252a;
+  align-items: center;
+  display: flex;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+
+.logo-image {
+  width: 11%;
+  height: auto;
+  margin-right: 2%;
+  padding-left: 3%;
+}
+
+.cmpy-name {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #0c5b84;
+}
+
+.cmpy-name-dc {
+  color: #8d7e6d;
+  font-size: 8px;
+  font-weight: bolder;
+}
+
+.sign-in-title {
+  color: #0c5b84;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+.input-field {
+  width: 100%; 
+  height:1%;
+  padding-top: 5%;
+
+}
+
+mat-form-field {
+  width: 100%;
+  height: 3%;
+}
+
+.next-btn{
+  padding-top:10%;
+  padding-left: 65%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+ 
+}
+.button-container-pwd{
+  padding-top: 10%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+}
+.button-container-code{
+  padding-top: 10%;
+  padding-left:30%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+}
+.submit{
+  margin-left : 43px;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  width : 100% ;
+  padding: 7%;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  width : 100% ;
+}
+.card-content{
+  width : 100% ;
+}
+.text{
+  padding-top: 8%;
+  font-weight: 400;
+  font-size:0.9em
+}
+.text1{
+  padding-top: 6%;
+  font-weight: 300;
+  font-size:0.9em
+}
+
+.link {
+  font-size: 14px;
+}
+.link a:hover {
+  text-decoration: underline; 
+  cursor: pointer; 
+}
+.link a {
+  color: #0c5b84; 
+}
+
+.init-pwd {
+  font-size: 14px; 
+  padding-top: 20px;
+}
+.init-pwd a:hover {
+  text-decoration: underline; 
+  cursor: pointer; 
+}
+.init-pwd a {
+  color: #0c5b84; 
+  text-decoration: none; 
+} 
+.radio-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+  padding-top: 10px;
+}
+
+.label-text {
+  font-size: 16px; 
+  padding-top: 3%;
+}
+
+.error-message {
+  font-size: 14px;
+  text-align: left;
+  color:#f44336;
+}
+.error-messages {
+  font-size: 14px;
+  padding-top:2%;
+  text-align: left;
+  color:#f44336;
+}
+.fullname {
+  font-size: 0.9em;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  line-height: 30px;
+}

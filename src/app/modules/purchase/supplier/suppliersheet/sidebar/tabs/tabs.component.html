@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="container">
+
+        <mat-tab-group [selectedIndex]="0 ">
+            <mat-tab label="Données Paiement ">
+                <div class="tab-content">
+                    <app-payment></app-payment>
+                </div>
+            </mat-tab>
+            <mat-tab label=" Données Fiscale ">
+                <div class="tab-content">
+                    <app-taxe></app-taxe>
+                </div>
+            </mat-tab>
+            <mat-tab label="Données Bancaires ">
+                <div class="tabs-content" style="margin-top:10px;">
+                    <app-bank></app-bank>
+                </div>
+            </mat-tab>
+            <mat-tab label="Adresse ">
+                <div class="tabs-content" style="margin-top:20px;">
+                    <app-adresse></app-adresse>
+                </div>
+            </mat-tab>
+            <mat-tab label="Contact ">
+                <div class="tabs-content">
+                    <app-contact></app-contact>
+                </div>
+            </mat-tab>
+            <mat-tab label="Prospection + Catalogue ">
+                <div class="tabs-content">
+                    <app-prospectus></app-prospectus>
+                </div>
+            </mat-tab>
+            <mat-tab label="Activité ">
+                <div class="tabs-content" style="margin-top:20px;">
+                    <app-activity></app-activity>
+                </div>
+            </mat-tab>
+
+            <!--  <mat-tab label="Enquéte de satisfaction ">
+            </mat-tab> -->
+            <mat-tab label="Qualité ">
+                <app-quality></app-quality>
+            </mat-tab>
+            <mat-tab label="Matricule Fiscale ">
+                <app-matricule></app-matricule>
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+</div>

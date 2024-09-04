@@ -1,0 +1,197 @@
+<div class="container">
+    <div class="column">
+        <div class="form-row">
+            <mat-form-field class="input">
+                <mat-label class="label">Banque</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="dropdown">
+                <mat-label class="label">MP</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="dropdown">
+                <mat-label class="label">Condition</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="input">
+                <mat-label class="label">%Remise</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <div class="upload">
+                <label class="custom-file-upload">
+                    <input type="file" (change)="onFileSelected($event, 'conv')">
+                    <mat-icon>attach_file</mat-icon>
+                </label>
+            </div>
+            <mat-form-field class="upload-filename">
+                <mat-label class="label">Doc convention</mat-label>
+                <input matInput [value]=" fileNameConv " readonly>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="dropdown">
+                <mat-label class="label">Actifs</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+    <div class="column">
+
+        <div class="form-row">
+            <mat-form-field class="input">
+                <mat-label class="label">%Escompte</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="dropdown">
+                <mat-label class="label">Devise</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="input">
+                <mat-label class="label">%Ristourne</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <div class="upload">
+                <label class="custom-file-upload">
+                    <input type="file" (change)="onFileSelected($event, 'tarif')">
+                    <mat-icon>attach_file</mat-icon>
+                </label>
+            </div>
+            <mat-form-field class="upload-filename">
+                <mat-label class="label">Doc tarif de prix</mat-label>
+                <input matInput [value]=" fileNameTarif " readonly>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="dropdown">
+                <mat-label class="label">Blocage règlement</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-row-3">
+
+            <li class="row">
+                <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+                    <mat-chip-option *ngFor="let chip of availableColors" [color]="chip.color">
+                        {{chip.name}}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </li>
+            <li class="row" style="margin-left:10px;">
+                <button class="buttonLabel" mat-raised-button (click)="toggleOcrSidebar()">OCR</button>
+
+            </li>
+            <li class="row" style="margin-left:20px;">
+                <button class="buttonLabel" mat-raised-button (click)="toggleIntegrationSidebar()">Intégration</button>
+            </li>
+        </div>
+
+    </div>
+
+</div>
+<div class="ocrsidebar-slider" [class.sidebar-slide-in]="ocrSidebarShow">
+    <div class="ocrsidebar-close" (click)="toggleOcrSidebar()">
+        X
+    </div>
+    <div class="sidebar-title">
+        <h2>OCR RNE</h2>
+    </div>
+    <div class="ocrsidebar-content">
+        <div class="column">
+            <img src="..\assets\images\Exemple MF.jpg" alt="Your Image" style="width:90%; height: auto;">
+        </div>
+        <div class="column" style="width:30%; height: auto; ">
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">MF</mat-label>
+                    <input matInput value="000M1661411/A">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button style="background-color: #F5F5F5; color: black;">Enregistrer</button>
+        </div>
+    </div>
+</div>
+
+<div class="integration-ocrsidebar-slider" [class.sidebar-slide-in]="integrationSidebarShow">
+    <div class="ocrsidebar-close" (click)="closeIntegrationSidebar()">
+        X
+    </div>
+    <div class="sidebar-title">
+        <h2>integration Sidebar Title</h2>
+    </div>
+    <div class="ocrsidebar-content">
+        <div class="column">
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 1</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 2</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 3</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="column" style="width:30%; height: auto; ">
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 4</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 5</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="input" style="padding-bottom:5%;">
+                    <mat-label class="label">Champ 6</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button style="background-color: #F5F5F5; color: black;">Enregistrer</button>
+        </div>
+    </div>
+</div>

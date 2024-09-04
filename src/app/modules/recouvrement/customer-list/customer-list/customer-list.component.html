@@ -1,0 +1,67 @@
+<div class="pb-24">
+
+    <p-tabView>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <span>Clients</span>
+            </ng-template>
+            <div class="mt-4 mb-3 p-4 bg-white border-1 border-round-lg shadow-2 sm:p-6 border-gray-200">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="w-12 flex items-center justify-between">                            
+                        <div class="flex items-center mr-3">
+                            <h3 class="mb-2 text-xl font-bold text-gray-900">Tous les clients</h3>
+                        </div>
+                    </div>
+                    <p-button type="button" label="Recherche" (click)="customerSearch()"></p-button>
+                </div>
+                <p-table #table [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5, 10, 20]" [value]="clients" [lazy]="true"
+                    (onLazyLoad)="loadCustomers($event)" [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true"
+                    [rows]="10" [totalRecords]="totalRecords" [loading]="loading" [styleClass]="'p-datatable-sm'">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>
+                                <i class="pi pi-flag-fill"></i>
+                            </th>
+                            <th style="min-width:135px" pSortableColumn="customerId">Identifiant
+                                <p-sortIcon field="customerId"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="customerName">Nom
+                                <p-sortIcon field="customerName"></p-sortIcon>
+                            </th>
+                            <th style="min-width:90px" pSortableColumn="relance">Scénario de relance
+                                <p-sortIcon field="relance"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="totale">Encours
+                                <p-sortIcon field="totale"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-customer>
+                        <tr>
+                            <td>
+                                <i [style.color]=" customer.customer_worst_delay < 0 && customer.customer_worst_delay > -7 ? '#ffdf00' : customer.customer_worst_delay < 90 && customer.customer_worst_delay >= 0 ? '#c04000' : customer.customer_worst_delay >= 90? 'balck':'#77dd77' "
+                                    class="pi pi-flag-fill">
+                                </i>
+                            </td>
+                            <td>
+                                <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                    [queryParams]="{id:customer.customer_id,entity:'',code:''}"> {{customer.customer_id }}
+                                </a>
+                            </td>
+                            <td>
+                                <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                    [queryParams]="{id:customer.customer_id,entity:'',code:''}"> {{customer.customer_name }}
+                                </a>
+                            </td>
+                            <td>{{customer.relance }}</td>
+                            <td>{{customer.totale }}</td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>

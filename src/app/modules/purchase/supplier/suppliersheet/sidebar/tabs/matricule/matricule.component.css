@@ -1,0 +1,33 @@
+ .example-button-container {
+     display: flex;
+     justify-content: center;
+     width: 120px;
+ }
+ 
+ .table-container {
+     display: flex;
+     align-items: center;
+     border: 1px solid #ccc;
+     border-radius: 8px;
+     padding: 16px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     width: 60%;
+     max-width: 100%;
+     background-color: white;
+     margin-left: 15%;
+     margin-bottom: 2%;
+     padding-left: 4%;
+     padding-right: 5%;
+ }
+ 
+ .button-container {
+     display: flex;
+     margin-left: 10px;
+ }
+ 
+ .matricule-title {
+     color: #51585e;
+     font-family: "Poppins", sans-serif;
+     font-size: 16px;
+     padding-left: 15px;
+ }

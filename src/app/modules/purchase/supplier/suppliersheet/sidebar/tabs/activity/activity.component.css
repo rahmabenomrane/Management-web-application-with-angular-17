@@ -1,0 +1,14 @@
+.switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    gap: 10px;
+    margin-bottom: 2%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}

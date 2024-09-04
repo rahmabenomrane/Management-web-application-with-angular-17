@@ -1,0 +1,556 @@
+/* appbar Stylesheet */
+.appbar {
+    transition: width 0.3s ease;
+  }
+  
+  .appbar-top-composite {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .appbar-module-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px; /* Ajustez la largeur selon vos besoins */
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .appbar-module-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+  
+  .appbar-module-buttons .p-button {
+    margin: 0 5px;
+  }
+ 
+  
+  .appbar-app-item.hidden {
+    display: none;
+  }
+  
+.moduleContent {
+    position: relative;
+}
+
+.pin-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+}
+
+.moduleContent:hover .pin-icon {
+    display: inline-block;
+    top: 15%;
+}
+
+.search-bar {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    /* Espacement sous le champ de recherche */
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    /* Grid layout avec des colonnes dynamiques */
+    gap: 0;
+    /* Espacement entre les modules dans la grille */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.favorite-modules-section {
+    position: absolute;
+    bottom: 0; /* Position en bas */ 
+   
+}
+
+
+
+
+.module-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.moduleListItem {
+    cursor: pointer;
+    padding: 7px;
+    list-style: none;
+}
+
+.moduleListItem:hover {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.search-container {
+   right: 10px;
+    margin-top: 10px;
+}
+
+
+.moduleIcon {
+    font-size: 24px;
+    margin-bottom: 5px;
+    /* Espacement entre l'icône et le nom du module */
+}
+
+
+.no-results {
+    padding: 10px;
+    text-align: center;
+    color: rgb(207, 206, 206);
+}
+
+/*1111111111111111111111111111111111*/
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 3 colonnes dans la grille, ajustez selon vos besoins */
+    gap: 0px;
+    /* Espacement entre les modules */
+    padding: 0;
+    /* Supprimer le padding du conteneur de la grille */
+    margin: 0;
+    /* Supprimer la marge du conteneur de la grille */
+
+}
+
+.selected {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.moduleButton {
+    margin: 0;
+    /* Supprimer toute marge par défaut */
+    padding: 0;
+    /* Supprimer tout padding par défaut */
+    box-sizing: border-box;
+    /* Inclure le padding et la bordure dans la largeur et la hauteur totales de l'élément */
+
+}
+
+.moduleButton:hover {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+
+
+.moduleIcon {
+    font-size: 24px;
+    /* Taille de l'icône */
+    margin-bottom: 5px;
+    /* Espacement entre l'icône et le nom du module */
+}
+
+
+
+
+.appbar {
+    left: 0px;
+    width: 48px;
+    top: -50px;
+    height: 100%;
+    white-space: normal;
+    position: absolute;
+    font-family: 'Poppins', sans-serif;
+}
+
+.codicon,
+ng-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.appbar-layout {
+    background-color: var(--surface-overlay);
+    box-shadow: 3px 0px 5px rgba(0, 0, 0, .02), 0px 0px 2px rgba(0, 0, 0, .05), 1px 0px 4px rgba(0, 0, 0, .08);
+    width: 48px;
+    height: 100%;
+    overflow: hidden;
+    white-space: normal;
+    z-index: 200000;
+}
+
+.appbar-layout::before {
+    right: 0;
+    content: "";
+    float: left;
+    position: absolute;
+    height: 100%;
+    width: 0;
+    border-color: inherit;
+    white-space: normal;
+}
+.custom-tiered-menu {
+    z-index: 1000000000000000000000000; /* Z-index encore plus élevé pour le conteneur du menu */
+}
+
+.p-tieredmenu-overlay {
+    z-index: 1000000000000000000000000 !important; /* Z-index élevé pour le menu contextuel */
+}
+.appbar-expanded {
+    width: 250px; /* Ajustez la largeur selon vos besoins */
+    transition: width 0.3s ease;
+    z-index: 9000000000000000000000; /* Z-index élevé pour être au-dessus des autres composants */
+}
+/* Cache les autres composants lorsqu'on survole le sidebar */
+.appbar-expanded ~ .other-components {
+    opacity: 0; /* Rendre les autres composants invisibles */
+    pointer-events: none; /* Empêcher les interactions avec les autres composants */
+    transition: opacity 0.3s ease;
+    z-index: 2000000000000000000000000000000000000000;
+}
+.appbar-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 200000;
+
+}
+
+.appbar-menubar {
+    display: flex;
+}
+
+.appbar-menubar-button {
+    color: #777;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    -webkit-app-region: no-drag;
+    zoom: 1;
+    white-space: nowrap;
+    outline: 0 !important;
+}
+
+
+.appbar-menubar-button-icon {
+    font: normal normal normal 16px/1 codicon;
+    text-decoration: none;
+    text-rendering: auto;
+    text-align: center;
+    text-transform: none;
+    width: 100%;
+    height: 48px;
+    color: #0c5b84;
+    position: relative;
+    /* border-radius: 5px; */
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: sub;
+    text-decoration: none;
+    text-rendering: auto;
+    text-align: center;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.appbar-menubar-button-icon.active {
+    background-color: var(--primary-color);
+}
+
+.appbar-menubar-button-icon.active:hover {
+    color: var(--primary-color);
+
+}
+
+.appbar-top-composite {
+    margin-bottom: auto;
+    white-space: normal;
+    margin-top: 0px;
+}
+
+s .appbar-apps {
+    text-align: left;
+    background-color: inherit;
+    white-space: nowrap;
+    height: 100%;
+}
+
+
+.appbar-apps-container {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+}
+
+.appbar-app-item {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    --insert-border-color: rgb(134, 134, 134);
+    border-radius: 7px;
+    margin: 0.2rem;
+}
+
+.appbar-app-item :hover {
+    background-color: var(--surface-border);
+
+}
+
+.appbar-app-label {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    overflow: hidden;
+    width: 48px;
+    height: 45px;
+    margin-right: 0;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    margin-top: 2px;
+
+}
+
+.appbar-app-label:active,
+.appbar-app-label:focus,
+.appbar-app-label:hover,
+.appbar-app-label.active {
+    color: #0c5b84;
+}
+
+.badge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border-color: #777;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.badge-content {
+    position: absolute;
+    top: 24px;
+    right: 8px;
+    font-size: 9px;
+    font-weight: 600;
+    min-width: 8px;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 4px;
+    border-radius: 20px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: #0c5b84;
+}
+
+.active-item-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    color: #d7d7d7;
+    pointer-events: none;
+}
+
+.active-item-indicator::before {
+    color: #0c5b84;
+    left: 0;
+    top: 0;
+    height: 100%;
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.appbar-top-bottom {
+    white-space: normal;
+}
+
+.layout-sidebar {
+    position: fixed;
+    width: 15%;
+    height: calc(100vh - 7rem);
+    z-index: 999;
+    overflow-y: auto;
+    user-select: none;
+    top: 4.5rem;
+    left: 60px;
+    transition: transform 0.3s, left 0.3s;
+    background-color: var(--surface-overlay);
+    border-radius: 0.25rem;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, .02), 0px 0px 2px rgba(0, 0, 0, .05), 0px 1px 4px rgba(0, 0, 0, .08);
+}
+
+  
+  
+
+.layout-menu>li>a {
+    font-size: 15px;
+    font-weight: 500;
+    z-index: 5000;
+}
+
+.layout-menu,
+.layout-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 5000;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.search-bar {
+    margin-top: 3px;
+    height: 30px;
+    background-color: #f5f5f5;
+    border: none;
+    border-bottom: 2px solid transparent;
+
+}
+
+.search-bar:hover {
+    border-bottom: 2px solid black;
+}
+
+.search-bar-list-view {
+    border-bottom: 2px solid black;
+}
+
+.button-label {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+
+.p-input-icon-left {
+    display: flex;
+    align-items: center;
+}
+
+.pi-arrow-up {
+    margin-top: -2px;
+    margin-bottom: auto;
+}
+
+
+.activeHome {
+    color: white;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+}
+
+.activeHome:hover .activeHome-icon {
+    color: var(--primary-color);
+}
+
+.activeHome-icon {
+    color: var(--surface-overlay);
+}
+
+.activeModule {
+    color: white;
+    border-left: 3px solid var(--primary-color);
+    background-color: var(--surface-border);
+
+}
+
+.activeModule-icon {
+    color: var(--primary-color);
+}
+
+.moduleContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    /* Assurez-vous que le contenu occupe toute la largeur de son conteneur */
+
+}
+
+.icon-left {
+    margin-right: 0.8rem;
+}
+
+.back-arrow {
+    margin-bottom: 2.5rem;
+}
+
+
+.pin-icon {
+    display: none;
+    position: absolute;
+    right: 10%;
+}
+
+.submenu:hover .pin-icon {
+    display: inline-block;
+}
+
+.fav-icon {
+    display: none;
+    position: absolute;
+    right: 10%;
+}
+
+a:hover .fav-icon {
+    display: inline-block;
+}
+
+.fav-menu {
+    color: var(--primary-color);
+}
+
+.active {
+    background-color: var(--surface-100);
+}
+
+.active-text {
+    color: var(--primary-color);
+}
+.appbar-bottom-composite {
+    position: absolute;
+    bottom: 0;
+    
+    display: flex;
+    justify-content: space-between;
+   
+}

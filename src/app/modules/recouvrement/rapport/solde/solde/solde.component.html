@@ -1,0 +1,210 @@
+<div #pnl >
+    <p-tabView>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-clock"></i>
+                <span class="pl-2">Solde client</span>
+            </ng-template>
+
+            <div class="flex gap-3">
+                <div class="col-9" >
+                    <p-dropdown styleClass="w-4" [options]="options" (onChange)="select($event)" [(ngModel)]="selectedOptions" 
+                        optionValue="value" optionLabel="label" [showClear]="true" placeholder="Entité">
+                    </p-dropdown>
+                    <h2 class="text-center">
+                        Solde client
+                    </h2>
+                    <div id="chart3">
+                        <!--  <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart" [dataLabels]="chartOptions2.dataLabels" [plotOptions]="chartOptions2.plotOptions" [yaxis]="chartOptions2.yaxis" [xaxis]="chartOptions2.xaxis" [legend]="chartOptions2.legend" [colors]="chartOptions2.colors"
+                            [grid]="chartOptions2.grid"></apx-chart> -->
+                            <apx-chart [colors]="chartOptions3.colors" [tooltip]="chartOptions3.tooltip"
+                                [legend]="chartOptions3.legend" [fill]="chartOptions3.fill" [series]="chartOptions3.series"
+                                [chart]="chartOptions3.chart" [dataLabels]="chartOptions3.dataLabels"
+                                [labels]="chartOptions3.labels">
+                            </apx-chart>
+                    </div>
+                </div>
+                <div class="col-3 lg:hidden top-0 right-0">
+                    <p-button styleClass="w-3 ml-10" (click)="sidebarVisible = true" icon="pi pi-filter"></p-button>
+                </div>
+                <div class="col-3 hidden lg:block mt-7">
+                    <div class="p-grid">
+                        <div class="p-col">
+                            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedEntities.length" filterMatchMode="contains"
+                                placeholder="Entité" [options]="entityOptions" [(ngModel)]="selectedEntities"
+                                optionLabel="entityName" (onFilter)="searchEntity($event)">
+                            </p-multiSelect>                            
+                        </div>
+                        <div class="p-col mt-1">
+                            <input [hidden]="!showCode" class="w-11" pInputText type="text" placeholder="code client"
+                                [(ngModel)]="customerCode" />
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect styleClass="w-11" filterBy="customer_id,customer_name"
+                                [maxSelectedLabels]="selectedCustomers.length" filterMatchMode="contains"
+                                placeholder="client" [options]="customerOptions" [(ngModel)]="selectedCustomers"
+                                optionLabel="customer_name" (onFilter)="searchCustomer($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedRecovrer.length" filterMatchMode="contains"
+                                placeholder="Récouvreur" [options]="recovrerOptions" [(ngModel)]="selectedRecovrer"
+                                optionLabel="recovrerValue" (onFilter)="searchRecovrer($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect styleClass="w-11" filterBy="regionLabel,regionValue" [maxSelectedLabels]="selectedRegion.length"
+                                filterMatchMode="contains" placeholder="Région" [options]="regionOptions"
+                                [(ngModel)]="selectedRegion" optionLabel="regionLabel">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedcustomerClass.length" filterMatchMode="contains"
+                                placeholder="Classe client" [options]="customerClassOptions"
+                                [(ngModel)]="selectedcustomerClass" optionLabel="classLabel"
+                                (onFilter)="searchClasses($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedcustomerType.length" filterMatchMode="contains"
+                                placeholder="Type client" [options]="customerTypeOptions" [(ngModel)]="selectedcustomerType"
+                                optionLabel="typeLabel" (onFilter)="searchTypes($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <div>
+                                <p-button styleClass="w-4 ml-1" (click)="filtreMethod()" icon="pi pi-search"></p-button>
+                                <p-button styleClass="w-3 ml-2 mr-2" (click)="clearFiltre()" icon="pi pi-filter-slash"></p-button>
+                                <p-button styleClass="w-3" (click)="clearSort()" icon="pi pi-sort-alt-slash"></p-button>
+                            </div> 
+                        </div>    
+                        <div class="p-col mt-1">
+                            <p-chip [removable]="true" *ngFor="let label of rangeLabel" (onRemove)="clearRangeFiltre()" [label]="label" />
+                        </div>                     
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p-table #table [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5, 10, 20]" [value]="clients" [lazy]="true" (onLazyLoad)="loadCustomers($event)"
+                [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+                [loading]="loading" [styleClass]="'p-datatable-sm'">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <i class="pi pi-flag-fill"></i>
+                        </th>
+                        <th pSortableColumn="customerId">Identifiant
+                            <p-sortIcon field="customer_id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customerCode">Code
+                            <p-sortIcon field="Code"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customerName">Nom
+                            <p-sortIcon field="customer_name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customerEntity">Entité
+                            <p-sortIcon field="Entity"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customerBalance">Solde
+                            <p-sortIcon field="solde"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>
+                            <i [style.color]=" customer.customer_worst_delay < 0 && customer.customer_worst_delay > -7 ? '#ffdf00' : customer.customer_worst_delay < 90 && customer.customer_worst_delay >= 0 ? '#c04000' : customer.customer_worst_delay >= 90? 'balck':'#77dd77' "
+                                class="pi pi-flag-fill">
+                            </i>
+                        </td>
+                        <td>
+                            <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                [queryParams]="{id:customer.zxsolde_revente,entity:customer.zxsolde_entite,code:customer.zxsolde_client}">
+                                {{customer.zxsolde_revente}}
+                            </a>
+                        </td>
+                        <td>
+                            {{customer.zxsolde_client}}
+                        </td>
+                        <td>
+                            <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                [queryParams]="{id:customer.zxsolde_revente,entity:customer.zxsolde_entite,code:customer.zxsolde_client}">
+                                {{customer.zxsolde_nom }}
+                            </a>
+                        </td>
+                        <td> {{customer.zxsolde_entite }}</td>
+                        <td>{{ customer.zxsolde_sol | currency:'TND':'' :'4.2-2': 'fr'}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td colspan="5" class="text-right">Total:</td>
+                        <td>{{total | currency:'TND':'' :'4.0-0': 'fr'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<p-sidebar position="right" [(visible)]="sidebarVisible">
+    <div class="p-grid">
+        <div class="p-col">
+            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedEntities.length" filterMatchMode="contains"
+                placeholder="Entité" [options]="entityOptions" [(ngModel)]="selectedEntities"
+                optionLabel="entityName" (onFilter)="searchEntity($event)">
+            </p-multiSelect>                            
+        </div>
+        <div class="p-col mt-1">
+            <input [hidden]="!showCode" class="w-11" pInputText type="text" placeholder="code client"
+                [(ngModel)]="customerCode" />
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-11" filterBy="customer_id,customer_name"
+                [maxSelectedLabels]="selectedCustomers.length" filterMatchMode="contains"
+                placeholder="client" [options]="customerOptions" [(ngModel)]="selectedCustomers"
+                optionLabel="customer_name" (onFilter)="searchCustomer($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedRecovrer.length" filterMatchMode="contains"
+                placeholder="Récouvreur" [options]="recovrerOptions" [(ngModel)]="selectedRecovrer"
+                optionLabel="recovrerValue" (onFilter)="searchRecovrer($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-11" filterBy="regionLabel,regionValue" [maxSelectedLabels]="selectedRegion.length"
+                filterMatchMode="contains" placeholder="Région" [options]="regionOptions"
+                [(ngModel)]="selectedRegion" optionLabel="regionLabel">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedcustomerClass.length" filterMatchMode="contains"
+                placeholder="Classe client" [options]="customerClassOptions"
+                [(ngModel)]="selectedcustomerClass" optionLabel="classLabel"
+                (onFilter)="searchClasses($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-11" [maxSelectedLabels]="selectedcustomerType.length" filterMatchMode="contains"
+                placeholder="Type client" [options]="customerTypeOptions" [(ngModel)]="selectedcustomerType"
+                optionLabel="typeLabel" (onFilter)="searchTypes($event)">
+            </p-multiSelect>
+        </div>
+      
+        <div class="p-col mt-1">
+            <div>
+                <p-button styleClass="w-4 ml-1" (click)="filtreMethod()" icon="pi pi-search"></p-button>
+                <p-button styleClass="w-3 ml-2 mr-2" (click)="clearFiltre()" icon="pi pi-filter-slash"></p-button>
+                <p-button styleClass="w-3" (click)="clearSort()" icon="pi pi-sort-alt-slash"></p-button>
+            </div> 
+        </div>    
+
+        <div class="p-col mt-1">
+            <p-chip [removable]="true" *ngFor="let label of rangeLabel" (onRemove)="clearRangeFiltre()" [label]="label" />
+        </div>                     
+    </div>
+</p-sidebar>
+<button type="button" id="auto_trigger" class="hidden">click</button>

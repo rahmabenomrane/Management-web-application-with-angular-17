@@ -1,0 +1,75 @@
+    /* .form-row-1 {
+    margin-top: 10px;
+}
+
+.form-row-2 {
+    margin-top: 10px;
+}
+ */
+    
+    .form-row-3 {
+        height: 57px;
+        display: flex;
+    }
+    
+    .input {
+        width: 45%;
+        margin-right: 5%
+    }
+    
+    .chipSwitch {
+        width: 15%;
+        margin-top: 1%;
+        margin-right: 1%;
+    }
+    
+    .taxeinput {
+        width: 25%;
+        margin-right: 2%;
+    }
+    
+    .upload {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    
+    .upload-filename {
+        width: 30%;
+        margin-right: 5%;
+    }
+    
+    .custom-file-upload {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 2px;
+        background-color: #ccc;
+        color: #0078d4;
+        border-color: #0078d4;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .custom-file-upload:hover {
+        background-color: #0078d4;
+        color: #F5F5F5;
+    }
+    
+    .custom-file-upload input[type="file"] {
+        display: none;
+    }
+    
+    .custom-file-upload mat-icon {
+        margin-bottom: 7px;
+        margin-top: 9px;
+    }
+    
+    .custom-file-upload span {
+        font-weight: 500;
+        font-family: "Poppins", sans-serif;
+    }
+    
+    .label {
+        font-size: 15px;
+    }

@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: #999;
+}
+
+.input {
+    width: 24%;
+    margin-right: 2%;
+}

@@ -1,0 +1,148 @@
+<p-card header="Fiche fournisseur" styleClass="h-full text-primary">
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Entité" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Section" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Famille" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex ">
+                <p-dropdown placeholder="Sous famille" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex">
+                <p-dropdown placeholder="Type" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+        <div class="field col-12 md:col-2">
+            <div class="p-inputgroup p-flex">
+                <p-dropdown placeholder="Pays" [style]="{width: '100%'}" ></p-dropdown>
+            </div>
+        </div>
+       
+    </div>
+  
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-6">
+            <span class="p-input-icon-right">
+                <input type="text" pInputText placeholder="Fournisseur" class="p-2" />
+                <i class="pi pi-search"></i>
+            </span>
+        </div>
+    
+        <div class="field col-12 md:col-4">
+            <div class="card flex justify-content-center">
+                <div class="flex align-items-center gap-6 mt-2">
+
+                    <div class="flex align-items-center">
+                        <p-checkbox name="pizza" value="Cheese1" [(ngModel)]="conventionne" binary="true" inputId="ingredient1"></p-checkbox>
+                        <label for="ingredient1" class="ml-2"> Conventioné </label>
+                    </div>
+                    
+
+                    <div class="flex align-items-center">
+                        <p-checkbox name="pizza" value="Cheese2" [(ngModel)]="actif" binary="true" inputId="ingredient2"></p-checkbox>
+                        <label for="ingredient2" class="ml-2"> Actif </label>
+                    </div>
+                    
+
+                    <div class="flex align-items-center">
+                        <p-checkbox name="pizza" value="Cheese3" [(ngModel)]="bloque" binary="true" inputId="ingredient3"></p-checkbox>
+                        <label for="ingredient3" class="ml-2"> Bloqué </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="field col-12 md:col-2 flex justify-content-start">   
+            <p-button icon="pi pi-search" styleClass="p-2"/>
+        </div>
+    </div>
+    
+    
+  
+
+    <div class="mb-3">
+        <p-button 
+            type="button" 
+            icon="pi pi-chevron-left" 
+            (click)="prev()" 
+            [disabled]="isFirstPage()" 
+            styleClass="p-button-text" />
+        <p-button 
+            type="button"
+            icon="pi pi-refresh" 
+            (click)="reset()" 
+            styleClass="p-button-text" />
+        <p-button 
+            type="button" 
+            icon="pi pi-chevron-right" 
+            (click)="next()" 
+            [disabled]="isLastPage()" 
+            styleClass="p-button-text" />
+    </div>
+    <div class="card">
+        <p-table
+            [value]="customers"
+            [paginator]="true"
+            [rows]="5"
+            [first]="first"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            (onPage)="pageChange($event)"
+            [rowsPerPageOptions]="[10, 25, 50]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Nom Tri</th>
+                    <th>Ville</th>
+                    <th>type</th>
+                    <th>Section</th>
+                    <th>Famille</th>
+                    <th>Sous Famille</th>
+                    <th>Entité</th>
+                    <th>Bloqué</th>
+                    <th>Actif</th>
+                    <th>Intégration</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td>19.8.75</td>
+                    <td>D695</td>
+                    <td>PRINTPACK</td>
+                    <td>F88888</td>
+                    <td>Dorra Tlili</td>
+                    <td>Service</td>
+                    <td>Transport</td>
+                    <td>Collier</td>
+                    <td>LL</td>
+                    <td>Fin</td>
+                    <td>Validé</td>
+                    <td>11-13-01</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" />
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />
+            </ng-template>
+        </p-table>
+    </div>
+    
+</p-card>

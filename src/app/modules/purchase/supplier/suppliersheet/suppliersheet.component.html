@@ -1,0 +1,68 @@
+<p-toast/>
+<div class="flex h-full">
+  <div class="col-fixed" [style]="{width: '40vh'}">
+    <p-card styleClass="h-full">      
+        <div class="flex align-items-center justify-content-between mb-3 mt-3">
+          <div class="w-12 flex items-center justify-between">
+            <div class="font-bold text-lg md:text-2xl">#F888888</div>
+          </div>
+          <p-tag [icon]="chipIcon" [severity]="chipSeverity" [value]="chipValue"></p-tag>
+        </div>  
+        <div class="flex flex-column" >
+            <input type="text" pInputText [(ngModel)]="name" placeholder="Nom" [class.ng-invalid]="requiredName" [class.ng-dirty]="requiredName" class="mb-2">
+            <input type="text" pInputText [(ngModel)]="triName" placeholder="Nom tri" class="mb-2">
+            <p-dropdown optionLabel="name"[(ngModel)]="selectedType" placeholder="Type" [options]="supplierType" class="mb-2" styleClass="w-12"></p-dropdown>
+            <input type="text" pInputText [(ngModel)]="relationAffaire" placeholder="Relation d'affaire"  class="mb-2">
+            <input type="text" pInputText [(ngModel)]="groupe" placeholder="Groupe" class="mb-2">
+            <input type="text" pInputText [(ngModel)]="folderRef" placeholder="Réference dossier" class="mb-2">
+            <input type="text" pInputText [(ngModel)]="respJurName" placeholder="Nom premier resp juridique" class="mb-2">
+            <div class="field grid ">
+              <p-inputSwitch [(ngModel)]="checked" class="ml-2 mt-2"  />
+              <label class="text-base col-12 mb-1 md:col-2 md:mb-0" >Concurrent</label>
+            </div>
+            <div class="field grid">
+              <p-inputSwitch [(ngModel)]="checked1" class="ml-2"/>
+              <label class="text-base ml-2" >A ne pas utiliser</label>
+            </div>
+        </div>
+    </p-card>
+  </div>
+  <div class="col" [style.width]="'40vh'">
+    <p-card styleClass="h-full text-primary">
+      <div class="flex align-items-center justify-content-between">
+        <div class="w-12 flex items-center justify-between">
+          <div class="font-bold text-2xl text-primary">Maintenance fournisseur</div>
+        </div>
+      </div>
+        <p-tabView [scrollable]="true">
+          <p-tabPanel header="Données Paiement">
+            <payment (errorMessages)="showError($event)" (paymentStatus)="updateStatus('payment', $event)"></payment>
+          </p-tabPanel>
+          <p-tabPanel header="Données Fiscale">
+            <taxe (errorMessages)="showError($event)" (taxeStatus)="updateStatus('taxe', $event)"></taxe>
+          </p-tabPanel>
+          <p-tabPanel header="Données Bancaires"> 
+            <bank (errorMessages)="showError($event)" (bankStatus)="updateStatus('bank', $event)"></bank>
+          </p-tabPanel>
+          <p-tabPanel header="Adresse">
+            <adresse (adresseStatus)="updateStatus('adresse', $event)"></adresse>
+          </p-tabPanel>
+          <p-tabPanel header="Contact">
+            <contact (errorMessages)="showError($event)" (contactStatus)="updateStatus('contact', $event)"></contact>
+          </p-tabPanel>
+          <p-tabPanel header="Prospectus & Catalogue">
+            <prospectus (prospectusStatus)="updateStatus('prospectus', $event)"></prospectus>
+          </p-tabPanel>
+          <p-tabPanel header="Activité">
+            <activity (activityStatus)="updateStatus('activity', $event)"></activity>
+          </p-tabPanel>
+          <p-tabPanel header="Qualité">
+            <quality (qualityStatus)="updateStatus('quality', $event)"></quality>
+          </p-tabPanel>
+          <!-- <p-tabPanel header="Matricule Fiscale"></p-tabPanel> -->
+        </p-tabView>
+    </p-card>
+  </div>
+</div>
+
+ 

@@ -1,0 +1,127 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNew()"></button>
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="usersList" [rows]="numberLine" [lazy]="true" (onLazyLoad)="getAllUsers($event)" [paginator]="true" [totalRecords]="totalRecords" 
+             [rowHover]="true" dataKey="id" [tableStyle]="{'min-width': '60rem'}" [(selection)]="selectedUser">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Maintenance utilisateurs
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Image</th>
+                <th>Nom et Prénom</th>
+                <th>Matricule</th>
+                <th>Email</th>
+                <th>Entité</th>
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr (click)="getUserById(item)">
+                <td><img class="w-0.5 sm:w-1 xl:w-2rem shadow-2 block xl:block mx-auto" src="/assets/layout/images/candidat.png" width="30" class="shadow-4" /></td>
+                <td>{{ item.userName }}</td>
+                <td>{{ item.userId }}</td>
+                <td>{{ item.userMail }}</td>
+                <td>{{ item.userEntity }}</td>
+                <td>    
+                     <p-tag severity="success" value="Actif"></p-tag> 
+                </td>
+                <td>
+                    <p-button icon="pi pi-ellipsis-h" (click)="openDetailsDialog()" [rounded]="true" [text]="true" [raised]="true" severity="secondary "></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{ totalRecords }} users.
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="userDetailsDialog" [style]="{ width: '450px' }" header="Details utilisateurs" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="selectedId">Matricule</label>
+                    <input id="selectedId" type="text" class="text-base primary-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" [value]="selectedId" readonly>
+                </div>
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="importDate">Date d'importation</label>
+                    <input id="importDate" type="text" class="text-base primary-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" [(ngModel)]="importDate">
+                </div>
+                <div class="field col">
+                    <label for="codePoste">Code Postal</label>
+                    <input pInputText id="codePoste" [(ngModel)]="codePoste">
+                </div>
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="situFamil">Situation Familiale</label>
+                    <input id="situFamil" type="text" class="text-base primary-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" [(ngModel)]="situFamil">
+                </div>
+                <div class="field col">
+                    <div class="field col">
+                        <label for="birthdayVille">Ville de naissance</label>
+                        <input id="birthdayVille" type="text" class="text-base primary-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" [(ngModel)]="birthdayVille">
+                    </div>          
+                </div>
+            </div>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="addUserDialog" [style]="{ width: '450px' }" header="Ajouter un utilisateur" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="newUserId">Matricule</label>
+                    <input id="newUserId" type="text" class="text-base primary-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" [(ngModel)]="newUserId">
+                </div>
+                <div class="field col">
+                    <label for="newUserName">Nom et Prénom</label>
+                    <input pInputText id="newUserName" [(ngModel)]="newUserName">
+                </div>
+            </div>
+            <div class="field">
+                <label for="userMail">Adresse Mail</label>
+                <input pInputText id="userMail" [(ngModel)]="newUserEmail">
+            </div>
+            <div class="field">
+                <label for="userExternalMail">Adresse Mail Externe</label>
+                <input pInputText id="userExternalMail" [(ngModel)]="newUserExtEmail">
+            </div>
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="entity">Entité</label>
+                    <input pInputText id="entity" [(ngModel)]="newUserEntity">
+                </div>
+                <div class="field col">
+                    <label for="userResp">Nom et Prénom</label>
+                    <input pInputText id="userResp" [(ngModel)]="newUserResp">
+                </div>
+            </div>
+            <form [formGroup]="formGroup">
+                <p-toggleButton [(ngModel)]="checked" onLabel="Active" offLabel="Desactive" onIcon=" pi-check" offIcon="pi pi-times" [style]="{ width: '10em' }"></p-toggleButton>
+            </form>
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="addNewUser()"></button>
+        </ng-template>
+    </p-dialog>
+</div>
+
+
+

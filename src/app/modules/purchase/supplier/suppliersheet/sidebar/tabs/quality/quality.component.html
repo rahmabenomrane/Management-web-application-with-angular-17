@@ -1,0 +1,25 @@
+<div class="input-container">
+    <div class="row">
+        <mat-form-field class="input">
+            <mat-label>Certification </mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field class="input">
+            <mat-label>Validité jusqu'au </mat-label>
+            <input matInput>
+        </mat-form-field>
+        <button mat-raised-button class="add-btn" (click)="addNewRow()"> 
+            <i class="fas fa-add"></i> Ajouter
+          </button> </div>
+    <div class="row1" *ngFor="let row of rows">
+        <mat-form-field class="field3">
+            <mat-label>Certification </mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="input">
+            <mat-label>Validité jusqu'au </mat-label>
+            <input matInput>
+        </mat-form-field>
+    </div>
+</div>

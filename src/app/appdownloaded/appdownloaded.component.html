@@ -1,0 +1,80 @@
+<div class="card">
+    <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <p>Applications </p>
+        <ng-template let-product pTemplate="item">
+
+            <div class="border-1 surface-border border-round m-2 p-3">
+                <div class="mb-3">
+                    <div class="relative mx-auto">
+                        <img src="https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp"
+                            [alt]="product.name" class="w-full border-round" />
+                        <div class="mb-1font-medium">
+                            {{ product.name }}
+                        </div>
+                        <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"
+                            class="absolute" [ngStyle]="{ 'left.px': 5, 'top.px': 5 }" />
+                    </div>
+                </div>
+
+                <div class="flex justify-content-between align-items-center">
+
+                    <span>
+                        <p-button severity="secondary" [outlined]="true">Voir les details</p-button>
+                    </span>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+
+</div>
+
+<div class="text-left font-bold mb-10px">
+    Applications
+</div>
+
+
+
+<div class="custom-carousel-container">
+    <!-- Boutons de navigation personnalisés -->
+    <div class="navigation-buttons">
+        <button type="button" pButton icon="pi pi-chevron-circle-left" class="custom-carousel-prev"
+            (click)="prevSlide()"></button>
+        <button type="button" pButton icon="pi pi-chevron-circle-right" class="custom-carousel-next"
+            (click)="nextSlide()"></button>
+    </div>
+    <p-carousel #carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions"
+        [circular]="true" [showIndicators]="false" [showNavigators]="false" 
+        [styleClass]="'custom-carousel'" [(page)]="activeIndex">
+        <ng-template let-product pTemplate="item">
+            <div class="card-container">
+                <p-card class="card-content">
+                  <div class="flex">
+                    <div class="image-container">
+                      <img alt="Card" src="https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp" class="card-image" />
+                    </div>
+                    
+                    <div class="details-container">
+                     <h3> {{ product.name }}</h3>
+                      <div class="name-rating-button">
+                        <div class="name-rating">
+                          <p>{{ product.rating }}</p><i class="pi pi-star-fill" style="font-size: 0.7rem;"></i>
+                          <span class="separator">|</span>
+                          <p>{{ product.name }}</p>
+                        </div>
+                        <p-button label="Detail" severity="primary" class="detail-button"></p-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    <p>{{ product.description }}</p>
+                  </div>
+                </p-card>
+              </div>
+
+
+
+</ng-template>
+</p-carousel>
+
+</div>
+<h1>.....</h1>

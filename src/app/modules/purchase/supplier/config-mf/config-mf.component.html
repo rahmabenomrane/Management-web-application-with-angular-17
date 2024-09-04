@@ -1,0 +1,29 @@
+<p-card header="Configuration matricule fiscale" styleClass="h-full text-primary">
+    <div class="card flex justify-content-center gap-2 mb-7">
+      <div *ngFor="let cell of cells">
+        <input type="text" pInputText [(ngModel)]="cell.value" [style]="{'width': '3rem','padding-left': '1rem'}" maxlength="1" (input)="onInputChange($event, cell.id)" (click)="selectCell(cell.id)" />
+      </div>
+      <p-button icon="pi pi-plus" (click)="addInput()"></p-button>
+      <p-button icon="pi pi-times" severity="secondary" (click)="deleteSelectedCell()"></p-button>
+    </div>
+
+    <p-table [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Position</th>
+                <th>Valeur</th>
+                <th>Champ</th>
+                <th>Règle</th>
+              
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" >
+            <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.category }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </p-card>

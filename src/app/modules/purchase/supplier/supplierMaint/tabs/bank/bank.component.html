@@ -1,0 +1,51 @@
+<div class="p-fluid p-formgrid grid justify-content-center flex-wrap">
+  
+    <div class="field col-12 md:col-2">
+        <label>Banque :</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown [(ngModel)]="bankValue" [options]="bankList" [class.ng-invalid]="requiredBank" [class.ng-dirty]="requiredBank" [style]="{width: '100%'}" size="sm" ></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-2">
+        <label>RIB</label>
+        <input pInputText [(ngModel)]="ribValue" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-2">
+        <label>Agence</label>
+        <input pInputText type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-2">
+        <label htmlFor="docRc">Copie RIB :</label>
+
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'docRC')" #fileInput style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileInput.click()"></button>
+            <input type="text" pInputText placeholder="Doc Convention" class="p-2" [value]="selectedFileName" readonly> 
+        </p-inputGroup>
+        
+    </div>
+    <div class="field col-12 md:col-2">
+        <label>Ajouté par</label>
+        <input pInputText type="text" class="p-2">
+    </div>
+</div>
+<p-table [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Banque</th>
+            <th>Agence</th>
+            <th>RIB</th>
+            <th>Copie RIB</th>
+            <th>Ajouté par</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" >
+        <tr>
+            <td>{{ product.code }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+    </ng-template>
+</p-table>

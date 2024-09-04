@@ -1,0 +1,369 @@
+<!-- Right Content -->
+<p-dropdown (onChange)="selectEntity($event)" [style]="{'width':'300px'}" filterMatchMode="lte"
+    [options]="entityOptions" [(ngModel)]="selectedEntities" optionValue="entityId" optionLabel="entityName"
+    filterBy="entityId" [filter]="true" (onFilter)="searchEntity($event)" [showClear]="true"
+    placeholder="Entité"></p-dropdown>
+<div class="flex justify-center items-center">
+    <div class="p-4 mb-4 bg-stone-100 border border-gray-200  shadow-sm w-full mb-[-45px] pb-[120px]   ">
+        <!-- <div class="flex items-center gap-2 col-span-12">
+            <h3 class="mb-4 text-xl font-semibold  ">General information</h3>
+            <div class="w-64 items-center sm:flex">
+                <app-dropdown class="w-full" [(ngModel)]="selectedEntities" [placeholder]="'Entité'" [value]="'entityId'" [label]="'entityName'" [searchable]="true" [multipleSelection]="false"></app-dropdown>
+            </div>
+        </div> -->
+
+
+        <div class="grid grid-cols-12 gap-4">
+            <div class="text-xs col-span-2">
+                <p>Code client:</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="">-</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Délai de paiement:</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_dp:""}}</p>
+
+            </div>
+            <div class="text-xs col-span-3">
+                <p class="text-center">Contact:</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Identifiant:</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="">{{customer[0]?customer[0].customer_id:""}}</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Moyen de paiement:</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_mp:""}}</p>
+            </div>
+            <div class="text-xs col-span-1">
+                <p class="">Nom</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_name:""}}</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Adresse</p>
+            </div>
+            <div class=" col-span-2">
+                <div class="text-xs font-semibold">
+                    <p>{{customer[0]?customer[0].customer_line1:""}}</p>
+                    <p>{{customer[0]?customer[0].customer_line2:""}}</p>
+
+                    <p>{{customer[0]?customer[0].customer_city :""}}</p>
+                    <p>{{customer[0]?customer[0].customer_country:""}}</p>
+                </div>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Quota</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_quota:""}}</p>
+            </div>
+            <div class="text-xs col-span-1">
+                <!-- <p class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                    </svg>
+                </p> -->
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_email:""}}</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Chargé de recouvrement :</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">-</p>
+            </div>
+            <div class="text-xs col-span-2">
+                <p class="">Scénario de relance :</p>
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">-</p>
+            </div>
+            <div class="text-xs col-span-1">
+                <!-- <p class=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                    </svg>
+                </p> -->
+            </div>
+            <div class=" col-span-2">
+                <p class="text-xs font-semibold">{{customer[0]?customer[0].customer_phone:""}}</p>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<p-tabView>
+    <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="pi pi-clock"></i>
+            <span>Relance & litiges</span>
+        </ng-template>
+
+        <p-timeline [value]="events" [value]="events" layout="horizontal" align="bottom"
+            styleClass="customized-timeline">
+            <ng-template pTemplate="marker" let-event>
+                <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
+                    <i [ngClass]="event.icon"></i>
+                </span>
+            </ng-template>
+            <ng-template pTemplate="content" let-event>
+                {{event.status}}
+            </ng-template>
+        </p-timeline>
+
+        <h2>Actions de relance à effectuer</h2>
+        <p-table #table [showCurrentPageReport]="true" [value]="relances" [lazy]="true"
+            (onLazyLoad)="loadActions($event)" [tableStyle]="{ 'min-width': '75rem' }" [styleClass]="'p-datatable-sm'">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>retard</th>
+                    <th>Action</th>
+                    <th>Montant de l'action TTC</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr class="expired">
+                    <td>{{ product.actionDelay }}</td>
+
+                    <td>{{ product.actionName }}</td>
+                    <td>{{ product.customerBalance }}</td>
+                    <td style="display: flex;gap: 2px;">
+
+                        <p-button severity="success" icon="pi pi-check" size="small"></p-button>
+
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <h2>Etat de compte non soldées</h2>
+        <div class="p-4 flex w-full justify-end">
+            <p-button (click)="clearSort()" icon="pi pi-sort-alt-slash"></p-button>
+
+        </div>
+        <p-table #table [(selection)]="selectedInvoices" [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 20]" [value]="customerInvoices" [lazy]="true"
+            (onLazyLoad)="loadInvoices($event)" [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="10"
+            [totalRecords]="totalRecords" [loading]="loading" [styleClass]="'p-datatable-sm'">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+
+
+                    <th style="width:20%" pSortableColumn="invoiceNum">N°pièce
+                        <p-sortIcon field="invoiceNum"></p-sortIcon>
+                    </th>
+
+
+                    <th pSortableColumn="invoiceDateEff">Date émission
+                        <p-sortIcon field="invoiceDateEff"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="invoiceDueDate">Date échéance
+                        <p-sortIcon field="invoiceDueDate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="customerEntity">Entité
+                        <p-sortIcon field="customerEntity"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nvoiceDelay">Retard
+                        <p-sortIcon field="nvoiceDelay"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="invoiceAmount">Montant initial
+                        <p-sortIcon field="invoiceAmount"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="invoiceBalance">Montant restant
+                        <p-sortIcon field="invoiceBalance"></p-sortIcon>
+                    </th>
+
+                    <th>Statut</th>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customerInvoice>
+                <tr [ngClass]="{'expired': customerInvoice.customerEntityInvoice_NbrDays>0,'NotExpired':customerInvoice.customerEntityInvoice_NbrDays<0}"
+                    class="expired">
+                    <td>
+                        <p-tableCheckbox [value]="customerInvoice"></p-tableCheckbox>
+                    </td>
+                    <td>{{customerInvoice.customerEntityInvoice_nbr }}</td>
+
+                    <td>{{customerInvoice.customerEntityInvoice_effdate }}</td>
+                    <td>{{customerInvoice.customerEntityInvoice_deadline }}</td>
+                    <td>{{customerInvoice.customerEntityInvoice_domain }}</td>
+                    <td>
+                        <p-tag severity="{{customerInvoice.customerEntityInvoice_NbrDays>0?'danger':'primaty'}}"
+                            value="{{ customerInvoice.customerEntityInvoice_NbrDays }} j"></p-tag>
+                    </td>
+                    <td>{{customerInvoice.customerEntityInvoice_amt }}</td>
+                    <td>{{customerInvoice.RemaningAmount }}</td>
+                    <td>{{customerInvoice.customerEntityInvoice_status }}</td>
+                    <!--  <td>
+
+                        <p-tag severity="danger" icon="pi pi-at" value="{{ product.type }}"></p-tag>
+                    </td> -->
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td colspan="6" class="text-right">Total</td>
+                    <td>{{invoiceAmtTotal }}</td>
+                    <td>{{remainingAmtTotal }}</td>
+                    <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+        <div class="w-full flex justify-content-start gap-2">
+
+            <p-button (click)="showDialog()"
+                label="modifier le statut/ajouter un commentaire/définir la prochaine relance" icon="pi pi-pencil
+            " size="small"></p-button>
+            <p-button label="Associer des fichiers" icon="pi pi-paperclip
+            " size="small"></p-button>
+
+            <p-button label="Ignorer les pièces lors de la relances" severity="secondary" size="small"></p-button>
+
+
+        </div>
+        <br>
+        <br>
+        <br>
+    </p-tabPanel>
+    <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="pi pi-history"></i>
+            <span> Historiques</span>
+        </ng-template>
+        <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            Nemo enim ipsam voluptatem quia voluptas
+            sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi
+            nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+        </p>
+    </p-tabPanel>
+    <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="pi pi-chart-bar"></i>
+            <span> Rapports et indicateurs</span>
+        </ng-template>
+        <div class=" mt-4 flex items-center justify-center gap-2">
+            <p class=" font-bold">Encours total : <span
+                    class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ">{{customerEntity[0]?customerEntity[0].customerEntity_total:0}}
+                    TND</span></p>
+            <p class=" font-bold">Encours échu : <span
+                    class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ">{{customerEntity[0]?customerEntity[0].EncoursEchu:0}}
+                    TND</span></p>
+            <p class=" font-bold">Taux de retard : <span
+                    class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ">{{customerEntity[0]?customerEntity[0].tauxRetard:0}}
+                    Jours</span></p>
+            <p class=" font-bold">Encours non échu: <span
+                    class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ">{{customerEntity[0]?customerEntity[0].EncoursNonEchu:0}}
+                    TND</span></p>
+            <p class=" font-bold">Promesses de règlement:<span
+                    class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ">0 TND</span>
+            </p>
+        </div>
+
+
+        <div class="mb-24 mt-4 grid gap-4 xl:grid-cols-2 2xl:grid-cols-2">
+            <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                [dataLabels]="chartOptions2.dataLabels" [plotOptions]="chartOptions2.plotOptions"
+                [yaxis]="chartOptions2.yaxis" [xaxis]="chartOptions2.xaxis" [legend]="chartOptions2.legend"
+                [colors]="chartOptions2.colors" [title]="chartOptions2.title" [grid]="chartOptions2.grid"></apx-chart>
+
+            <apx-chart [title]="chartOptions4.title" [series]="chartOptions4.series" [chart]="chartOptions4.chart"
+                [dataLabels]="chartOptions4.dataLabels" [plotOptions]="chartOptions4.plotOptions"
+                [responsive]="chartOptions4.responsive" [xaxis]="chartOptions4.xaxis" [legend]="chartOptions4.legend"
+                [fill]="chartOptions4.fill">
+            </apx-chart>
+
+
+        </div>
+        <div class="mb-24 mt-4 grid gap-4 xl:grid-cols-2 2xl:grid-cols-2">
+
+
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                [markers]="chartOptions.markers" [stroke]="chartOptions.stroke" [yaxis]="chartOptions.yaxis"
+                [dataLabels]="chartOptions.dataLabels" [title]="chartOptions.title" [fill]="chartOptions.fill"
+                [tooltip]="chartOptions.tooltip" [legend]="chartOptions.legend"></apx-chart>
+            <apx-chart [series]="chartOptions5.series" [chart]="chartOptions5.chart" [yaxis]="chartOptions5.yaxis"
+                [xaxis]="chartOptions5.xaxis" [labels]="chartOptions5.labels" [stroke]="chartOptions5.stroke"
+                [title]="chartOptions5.title" [dataLabels]="chartOptions5.dataLabels" [fill]="chartOptions5.fill"
+                [tooltip]="chartOptions5.tooltip"></apx-chart>
+
+        </div>
+    </p-tabPanel>
+
+</p-tabView>
+
+
+<p-button icon="pi pi-external-link" label="Show"></p-button>
+<p-dialog header="Liste des pièces sélectionnées :" [(visible)]="visible" [modal]="true" [styleClass]="'p-datatable-sm'"
+    [style]="{ width: '80vw' } ">
+    <p-table [value]="selectedInvoices" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:20%">N°pièce
+
+                </th>
+                <th>N°commande</th>
+                <th>Date émission</th>
+                <th>Date échéance</th>
+                <th>Entité</th>
+                <th>Retard</th>
+                <th>Montant initial</th>
+                <th>Montant restant</th>
+                <th>Statut</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customerInvoice>
+            <tr [ngClass]="{'expired': customerInvoice.customerEntityInvoice_NbrDays>0,'NotExpired':customerInvoice.customerEntityInvoice_NbrDays<0}"
+                class="expired">
+
+                <td>{{customerInvoice.customerEntityInvoice_nbr }}</td>
+                <td></td>
+                <td>{{customerInvoice.customerEntityInvoice_effdate }}</td>
+                <td>{{customerInvoice.customerEntityInvoice_deadline }}</td>
+                <td>{{customerInvoice.customerEntityInvoice_domain }}</td>
+                <td>
+                    <p-tag severity="{{customerInvoice.customerEntityInvoice_NbrDays>=0?'danger':'primaty'}}"
+                        value="{{ customerInvoice.customerEntityInvoice_NbrDays }} j"></p-tag>
+                </td>
+                <td>{{customerInvoice.customerEntityInvoice_amt }}</td>
+                <td>{{customerInvoice.RemaningAmount }}</td>
+                <td>{{customerInvoice.customerEntityInvoice_status }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+
+<!-- <p-blockUI [blocked]="!customerDetailsCompelte&&!agingBalanceComplete&&!customerInvoicesCompelte">
+    <div class="card flex justify-content-center">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+</p-blockUI> -->

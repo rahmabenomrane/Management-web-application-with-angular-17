@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="switch-row">
+        <div class="row">
+            <mat-slide-toggle class="example-margin large-font " [color]="color " [checked]="checked " [disabled]="disabled ">
+                Fariquant
+            </mat-slide-toggle>
+        </div>
+        <div class="row">
+            <mat-slide-toggle class="example-margin large-font " [color]="color " [checked]="checked " [disabled]="disabled ">
+                Entreprise Commerciale
+            </mat-slide-toggle>
+        </div>
+        <div class="row">
+            <mat-slide-toggle class="example-margin large-font " [color]="color " [checked]="checked " [disabled]="disabled ">
+                Prestataire de service
+            </mat-slide-toggle>
+        </div>
+    </div>
+
+    <mat-form-field style="width:100%;">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="section">
+            <th mat-header-cell *matHeaderCellDef> Section </th>
+            <td mat-cell *matCellDef="let element"> {{element.section}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="agency">
+            <th mat-header-cell *matHeaderCellDef> Famille </th>
+            <td mat-cell *matCellDef="let element"> {{element.agency}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rib">
+            <th mat-header-cell *matHeaderCellDef> Sous-famille </th>
+            <td mat-cell *matCellDef="let element"> {{element.rib}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="copieRib">
+            <th mat-header-cell *matHeaderCellDef> Gammes / Marques représentées </th>
+            <td mat-cell *matCellDef="let element"> {{element.copieRib}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+</div>

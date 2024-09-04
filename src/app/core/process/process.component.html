@@ -1,0 +1,8 @@
+<div class="flex flex-column h-full overflow-y-hidden">
+    <div class="flex-grow-1">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="flex-grow-2">
+        <process-footer (validateButtonClicked)="checkValidProcess()"></process-footer>
+    </div>
+</div>

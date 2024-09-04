@@ -1,0 +1,225 @@
+<div>
+    <p-tabView>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-clock"></i>
+                <span class="pl-2">Prévision de récouvrement</span>
+            </ng-template>
+             <div class="flex gap-3">
+                <div class="col-9" >
+                    <h2 class="text-center">
+                        Prévision de récouvrement
+                    </h2>
+                    <div class="flex align-items-center justify-content-between">
+                        <div class="w-12 flex items-center justify-between">                            
+                            <div class="flex items-center mr-3">
+                                <input (click)="selectPriodType()" id="default-radio-1" type="radio" value="m"
+                                    [(ngModel)]="radio" name="default-radio"
+                                    class="w-4 h-4 bg-gray-100 border-gray-300 text-blue-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 ">Par mois</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input (click)="selectPriodType()" id="default-radio-2" type="radio" value="w"
+                                    [(ngModel)]="radio" name="default-radio"
+                                    class="w-4 h-4 bg-gray-100 border-gray-300 text-blue-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                                <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 ">Par semaine</label>
+                            </div>
+                        </div>
+                        <p-dropdown (onChange)="selectPeriod($event)" [options]="period" [(ngModel)]="selectedPeriod"
+                            optionLabel="label" placeholder="Période">
+                        </p-dropdown>
+                    </div>
+                    <div id="chart">
+                        <apx-chart [series]="chartOptions4.series" [chart]="chartOptions4.chart"
+                            [dataLabels]="chartOptions4.dataLabels" [plotOptions]="chartOptions4.plotOptions"
+                            [responsive]="chartOptions4.responsive" [xaxis]="chartOptions4.xaxis"
+                            [yaxis]="chartOptions4.yaxis" [legend]="chartOptions4.legend" [fill]="chartOptions4.fill"
+                            [tooltip]="chartOptions4.tooltip">
+                        </apx-chart>
+                    </div>
+                </div>
+                <div class="col-3 lg:hidden top-0 right-0">
+                    <p-button styleClass="w-3 ml-10" (click)="sidebarVisible = true" icon="pi pi-filter"></p-button>
+                </div>
+                <div class="col-3 hidden lg:block mt-7">
+                    <div class="p-grid">
+                        <div class="p-col">
+                            <p-multiSelect [maxSelectedLabels]="selectedEntities.length" filterMatchMode="contains"
+                                placeholder="Entité" [options]="entityOptions" [(ngModel)]="selectedEntities"
+                                optionLabel="entityName" styleClass="w-11" 
+                                (onFilter)="searchEntity($event)">
+                            </p-multiSelect>                           
+                        </div>
+                        <div class="p-col mt-1">
+                            <input [hidden]="!showCode" class="w-11" pInputText type="text" placeholder="code client"
+                                [(ngModel)]="customerCode" />
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect filterBy="customer_id,customer_name"
+                                [maxSelectedLabels]="selectedCustomers.length" filterMatchMode="contains"
+                                placeholder="client" [options]="customerOptions" [(ngModel)]="selectedCustomers"
+                                optionLabel="customer_name" styleClass="w-11" 
+                                (onFilter)="searchCustomer($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect [maxSelectedLabels]="selectedRecovrer.length" filterMatchMode="contains"
+                                placeholder="Récouvreur" [options]="recovrerOptions" [(ngModel)]="selectedRecovrer"
+                                optionLabel="recovrerValue" styleClass="w-11" 
+                                (onFilter)="searchRecovrer($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect filterBy="regionLabel,regionValue" [maxSelectedLabels]="selectedRegion.length"
+                                filterMatchMode="contains" placeholder="Région" [options]="regionOptions"
+                                [(ngModel)]="selectedRegion" optionLabel="regionLabel"
+                                styleClass="w-11" >
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect [maxSelectedLabels]="selectedcustomerClass.length" filterMatchMode="contains"
+                                placeholder="Classe client" [options]="customerClassOptions"
+                                [(ngModel)]="selectedcustomerClass" optionLabel="classLabel" styleClass="w-11" 
+                                (onFilter)="searchClasses($event)">
+                            </p-multiSelect>
+                        </div>
+                        <div class="p-col mt-1">
+                            <p-multiSelect [maxSelectedLabels]="selectedcustomerType.length" filterMatchMode="contains"
+                                placeholder="Type client" [options]="customerTypeOptions" [(ngModel)]="selectedcustomerType"
+                                optionLabel="typeLabel" styleClass="w-11" 
+                                (onFilter)="searchTypes($event)">
+                            </p-multiSelect>
+                        </div>
+                      
+                        <div class="p-col mt-1">
+                            <div>
+                                <p-button styleClass="w-4 ml-1" (click)="filtreMethod()" icon="pi pi-search"></p-button>
+                                <p-button styleClass="w-3 ml-2 mr-2" (click)="clearFiltre()" icon="pi pi-filter-slash"></p-button>
+                                <p-button styleClass="w-3" (click)="clearSort()" icon="pi pi-sort-alt-slash"></p-button>
+                            </div> 
+                        </div>  
+                        <div class="p-col mt-1">
+                            <p-chip [removable]="true" *ngFor="let label of rangeLabel" (onRemove)="clearRangeFiltre()"
+                                [label]="label" />
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <p-table #table [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5, 10, 20]" [value]="clients" [lazy]="true" (onLazyLoad)="loadCustomers($event)"
+                [tableStyle]="{ 'min-width': '75rem' }" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+                [loading]="loading" [styleClass]="'p-datatable-sm'">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <i class="pi pi-flag-fill"></i>
+                        </th>
+                        <th style="min-width:135px" pSortableColumn="customerId">Identifiant
+                            <p-sortIcon field="customerId"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="customerName">Nom
+                            <p-sortIcon field="customerName"></p-sortIcon>
+                        </th>
+                        <th style="min-width:90px" pSortableColumn="customerCode">Code
+                            <p-sortIcon field="customerCode"></p-sortIcon>
+                        </th>
+
+                        <th style="min-width:90px" pSortableColumn="customerEntity">entité
+                            <p-sortIcon field="customerEntity"></p-sortIcon>
+                        </th>
+                        <th style="min-width:150px" pSortableColumn="{{ col.value }}" *ngFor="let col of cols">
+                            {{ col.label }}
+                            <p-sortIcon field="{{ col.value }}"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="totalCashForecast">Total
+                            <p-sortIcon field="totalCashForecast"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>
+                            <i [style.color]=" customer.customer_worst_delay < 0 && customer.customer_worst_delay > -7 ? '#ffdf00' : customer.customer_worst_delay < 90 && customer.customer_worst_delay >= 0 ? '#c04000' : customer.customer_worst_delay >= 90? 'balck':'#77dd77' "
+                                class="pi pi-flag-fill">
+                            </i>
+                        </td>
+                        <td>
+                            <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                [queryParams]="{id:customer.customerId,entity:customer.customerEntity,code:customer.customerCode,period:rangeLabel[0],periodType:selectedPeriodType,chartName:'forecast'}">
+                                {{customer.customerId }}
+                            </a>
+                        </td>
+                        <td>
+                            <a style="color: #337ab7;font-weight: blod;" [routerLink]="['../cust-info-details']"
+                                [queryParams]="{id:customer.customerId,entity:customer.customerEntity,code:customer.customerCode,period:rangeLabel[0],periodType:selectedPeriodType,chartName:'forecast'}">
+                                {{customer.customerName }}
+                            </a>
+                        </td>
+                        <td>{{customer.customerCode }}</td>
+                        <td>{{customer.customerEntity }}</td>
+                        <td *ngFor="let col of cols"> {{customer[col.value] |currency:'TND':'' :'4.2-2': 'fr'}}</td>
+                        <td>{{customer.totalCashForecast | currency:'TND':'' :'4.2-2': 'fr' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td [attr.colspan]="cols? cols.length + 5 : 0 " class="text-right">Total:</td>
+                        <td>{{total| currency:'TND':'' :'4.0-0': 'fr'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table> 
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<p-sidebar position="right" [(visible)]="sidebarVisible">
+    <div class="p-grid mt-3">
+        <div class="p-col">
+            <p-multiSelect styleClass="w-12" [maxSelectedLabels]="selectedEntities.length" filterMatchMode="contains"
+                placeholder="Entité" [options]="entityOptions" [(ngModel)]="selectedEntities"
+                optionLabel="entityName" (onFilter)="searchEntity($event)">
+            </p-multiSelect>                            
+        </div>
+        <input [hidden]="!showCode" class="w-12 mt-1" pInputText type="text" placeholder="code client"
+            [(ngModel)]="customerCode" />
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-12" filterBy="customer_id,customer_name"
+                [maxSelectedLabels]="selectedCustomers.length" filterMatchMode="contains"
+                placeholder="client" [options]="customerOptions" [(ngModel)]="selectedCustomers"
+                optionLabel="customer_name" (onFilter)="searchCustomer($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-12" [maxSelectedLabels]="selectedRecovrer.length" filterMatchMode="contains"
+                placeholder="Récouvreur" [options]="recovrerOptions" [(ngModel)]="selectedRecovrer"
+                optionLabel="recovrerValue" (onFilter)="searchRecovrer($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-12" filterBy="regionLabel,regionValue" [maxSelectedLabels]="selectedRegion.length"
+                filterMatchMode="contains" placeholder="Région" [options]="regionOptions"
+                [(ngModel)]="selectedRegion" optionLabel="regionLabel">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-12" [maxSelectedLabels]="selectedcustomerClass.length" filterMatchMode="contains"
+                placeholder="Classe client" [options]="customerClassOptions"
+                [(ngModel)]="selectedcustomerClass" optionLabel="classLabel"
+                (onFilter)="searchClasses($event)">
+            </p-multiSelect>
+        </div>
+        <div class="p-col mt-1">
+            <p-multiSelect styleClass="w-12" [maxSelectedLabels]="selectedcustomerType.length" filterMatchMode="contains"
+                placeholder="Type client" [options]="customerTypeOptions" [(ngModel)]="selectedcustomerType"
+                optionLabel="typeLabel" (onFilter)="searchTypes($event)">
+            </p-multiSelect>
+        </div>
+      
+        <div class="p-col mt-1">
+            <div>
+                <p-button styleClass="w-12" (click)="filtreMethod()" icon="pi pi-search"></p-button>
+            </div>
+        </div>                        
+    </div>
+</p-sidebar>
+<button type="button" id="auto_trigger" class="hidden">click</button>

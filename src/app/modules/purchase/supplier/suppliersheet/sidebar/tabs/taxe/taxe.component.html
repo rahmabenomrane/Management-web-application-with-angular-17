@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="row">
+        <div class="form-row-2">
+            <mat-form-field class="input">
+                <mat-label class="label">Compte Achat</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field class="input">
+
+                <mat-label class="label">Sous Compte</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-row-2">
+            <mat-form-field class="input">
+
+                <mat-label class="label">Compte CF</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="input">
+
+                <mat-label class="label">Sous Compte CF</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-row-2">
+
+            <mat-form-field class="input">
+                <mat-label class="label">Format</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="input">
+                <mat-label class="label">Forme Juridique</mat-label>
+                <mat-select>
+                    <mat-option value="one" class="label">First option</mat-option>
+                    <mat-option value="two" class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-row-3">
+            <div class="chipSwitch">
+                <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+                    <mat-chip-option *ngFor="let chip of availableColors" [color]="chip.color">
+                        {{chip.name}}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <mat-form-field class="taxeinput">
+                <mat-label class="label">Taux Taxe</mat-label>
+                <mat-select>
+                    <mat-option value="one " class="label">First option</mat-option>
+                    <mat-option value="two " class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="taxeinput">
+                <mat-label class="label">Zone Taxe</mat-label>
+                <mat-select>
+                    <mat-option value="one " class="label">First option</mat-option>
+                    <mat-option value="two " class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="taxeinput">
+                <mat-label class="label">Usage Taxe</mat-label>
+                <mat-select>
+                    <mat-option value="one " class="label">First option</mat-option>
+                    <mat-option value="two " class="label">Second option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-row-2">
+
+            <mat-form-field class="input">
+                <mat-label class="label">RNE</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field class="input">
+                <mat-label class="label">MF / CIN</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-row-3">
+
+            <div class="upload">
+                <label class="custom-file-upload">
+                    <input type="file" (change)="onFileSelected($event, 'rc')">
+                    <mat-icon>attach_file</mat-icon>
+                </label>
+            </div>
+            <mat-form-field class="upload-filename">
+                <mat-label class="label">Doc RC</mat-label>
+                <input matInput [value]=" fileNameRc " readonly>
+            </mat-form-field>
+
+            <div class="upload">
+                <label class="custom-file-upload">
+                    <input type="file" (change)="onFileSelected($event, 'mf')">
+                    <mat-icon>attach_file</mat-icon>
+                </label>
+            </div>
+            <mat-form-field class="upload-filename">
+                <mat-label class="label">Doc MF</mat-label>
+                <input matInput [value]=" fileNameMf " readonly>
+            </mat-form-field>
+
+            <div class="upload">
+                <label class="custom-file-upload">
+                        <input type="file" (change)="onFileSelected($event, 'statut')">
+                        <mat-icon>attach_file</mat-icon>
+                    </label>
+            </div>
+            <mat-form-field class="upload-filename">
+                <mat-label class="label">Doc statut</mat-label>
+                <input matInput [value]=" fileNameStatut " readonly>
+            </mat-form-field>
+
+        </div>
+    </div>
+
+
+</div>

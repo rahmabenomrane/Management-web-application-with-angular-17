@@ -1,0 +1,40 @@
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-3">
+        <label>Email Société</label>
+        <input pInputText type="text"  class="p-2">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label htmlFor="tel">Télephone</label>
+        <input id="tel" pInputText [(ngModel)]="telValue" [class.ng-invalid]="requiredTel" [class.ng-dirty]="requiredTel" type="text" class="p-2" 
+        required (keydown)="checkTel($event)">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label>Fax / Télex</label>
+        <input pInputText type="text" class="p-2" (keydown)="checkFax($event)">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label>Site web</label>
+        <input pInputText type="text" class="p-2">
+    </div>
+</div>
+
+<p-table [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nom</th>
+            <th>Télephone</th>
+            <th>Fax / Télex</th>
+            <th>Email Société</th>
+            <th>Ajouté par</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" >
+        <tr>
+            <td>{{ product.code }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+    </ng-template>
+</p-table>

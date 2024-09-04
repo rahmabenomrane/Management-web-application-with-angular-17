@@ -1,0 +1,47 @@
+<div>
+    <div class="matricule-title">
+        <h2>Matricule Fiscale</h2>
+    </div>
+    <div class="table-container">
+
+        <table class="container" cellspacing="0">
+            <tr id="inputRow">
+                <td *ngFor="let input of inputs.controls; let i = index">
+                    <mat-form-field class="input" style="width: 45px;">
+                        <input matInput placeholder="X" maxlength="1">
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+        <div class="button-container">
+            <button (click)="addInput()" mat-mini-fab color="primary" style="margin-left: 10%; margin-right: 3%; border-radius: 0; height:50px;">
+            <mat-icon>add</mat-icon>
+        </button>
+            <button (click)="deleteInput()" mat-mini-fab color="warn" style="border-radius: 0; height:50px;">
+            <mat-icon>delete</mat-icon>
+        </button>
+
+        </div>
+
+    </div>
+    <div class="container" style="margin-left:5%;margin-right:5%;margin-bottom:5%;">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="regle">
+                <th mat-header-cell *matHeaderCellDef> Règle </th>
+                <td mat-cell *matCellDef="let element"> {{element.regle}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

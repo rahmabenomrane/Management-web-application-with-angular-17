@@ -1,0 +1,110 @@
+<!-- <p-toast/>  -->
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-3">
+        <label htmlFor="compteAchat">Compte achat</label>
+        <input pInputText id="compteAchat" type="text" [(ngModel)]="compteAchatValue" [class.ng-invalid]="!validCA"  [class.ng-dirty]="!validCA" class="p-2" >
+    </div>
+    <div class="field col-12 md:col-3">
+        <label htmlFor="sCompteAchat">Sous compte achat</label>
+        <input pInputText id="sCompteAchat" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label htmlFor="compteCF">Compte CF</label>
+        <input pInputText id="compteCF" [(ngModel)]="compteCfValue" type="text" [class.ng-invalid]="!validCF"  [class.ng-dirty]="!validCF"class="p-2">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label htmlFor="sCompteCF">Sous compte CF</label>
+        <input pInputText id="sCompteCF" type="text" class="p-2">
+    </div>
+</div>
+<div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-4">
+        <label htmlFor="format">Format</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown placeholder="format" [(ngModel)]="formatValue" [options]="formatList" [style]="{width: '100%'}" size="sm" optionLabel="format"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-4">
+        <label htmlFor="formeJur">Forme juridique</label>
+        <div class="p-inputgroup p-flex">
+            <p-dropdown placeholder="Forme juridique" [(ngModel)]="formeJurValue" [options]="formeJurList" [style]="{width: '100%'}" [class.ng-invalid]="requiredFormeJur" [class.ng-dirty]="requiredFormeJur" size="sm" optionLabel="name"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-4">
+        <label htmlFor="docStatus">Doc status :</label>
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'status')" #fileDocStatus style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileDocStatus.click()"></button>
+            <input type="text" pInputText placeholder="Doc Status" class="p-2" [value]="statusFileName" [class.ng-invalid]="requiredDocStatus" [class.ng-dirty]="requiredDocStatus" readonly> 
+        </p-inputGroup>        
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid grid">
+  
+    <div class="field col-12 md:col-3">
+        <label>A taxer</label><br>
+        <p-toggleButton [(ngModel)]="taxeChecked" onLabel="Oui" offLabel="Non" styleClass="p-2" />
+    </div>
+    <div class="field col-12 md:col-3">
+        <label>Taux taxe</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown  [(ngModel)]="tauxTaxeValue" placeholder="Taux taxe" [style]="{width: '100%'}" size="sm" [options]="tauxtaxeList" optionLabel="value" [class.ng-invalid]="requiredTauxTaxe" [class.ng-dirty]="requiredTauxTaxe"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-3">
+        <label>Zone Taxe</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown  [(ngModel)]="zoneTaxeValue" placeholder="Zone Taxe" [style]="{width: '100%'}" size="sm" [options]="zonetaxeList" optionLabel="value" [class.ng-invalid]="requiredZoneTaxe" [class.ng-dirty]="requiredZoneTaxe"></p-dropdown>
+        </div>
+    </div>
+    <div class="field col-12 md:col-3">
+        <label>Usage Taxe</label>
+        <div class="p-inputgroup p-flex ">
+            <p-dropdown  [(ngModel)]="usageTaxeValue" placeholder="Usage Taxe" [style]="{width: '100%'}" size="sm" [options]="usagetaxeList" optionLabel="value" [class.ng-invalid]="requiredUsageTaxe" [class.ng-dirty]="requiredUsageTaxe"></p-dropdown>
+        </div>
+    </div>
+</div>
+<div class="p-fluid p-formgrid grid mb-2">
+    <div class="field col-12 md:col-3">
+        <label >MF / CIN:</label>
+        <input *ngIf="formatValue?.code === 'PPNP'" pInputText id="mfCin" type="text" class="p-2" maxlength="8" required 
+        [(ngModel)]="mfCinValue" [class.ng-invalid]="requiredMF" [class.ng-dirty]="requiredMF" (keydown)="checkCin($event)">
+
+        <input *ngIf="formatValue?.code !== 'PPNP'" pInputText [(ngModel)]="mfCinValue" [class.ng-invalid]="requiredMF" [class.ng-dirty]="requiredMF"
+        id="mfCin" name="mfCin" type="text" class="p-2" required>
+    </div>
+   <!--  <div class="field col-12 md:col-4">
+        <label htmlFor="docStatus">Doc status :</label>
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'status')" #fileDocStatus style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileDocStatus.click()"></button>
+            <input type="text" pInputText placeholder="Doc Status" class="p-2" [value]="statusFileName" [class.ng-invalid]="requiredDocStatus" [class.ng-dirty]="requiredDocStatus"readonly> 
+        </p-inputGroup>        
+    </div> -->
+
+    <div class="field col-12 md:col-3">
+        <label htmlFor="doc mf">Doc MF / CIN:</label>
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'docMF')" #fileMf style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileMf.click()"></button>
+            <input type="text" pInputText placeholder="Doc MF" class="p-2" [value]="mfFileName" [class.ng-invalid]="requiredDocMF" [class.ng-dirty]="requiredDocMF" readonly> 
+        </p-inputGroup>
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label htmlFor="rc">RC / RNE :</label>
+        <input pInputText id="rc" type="text" class="p-2">
+    </div>
+    <div class="field col-12 md:col-3">
+        <label htmlFor="docRc">Doc RC / RNE :</label>
+
+        <p-inputGroup [style]="{ 'height': '2.3rem' }">
+            <input type="file" (change)="onFileSelected($event, 'docRC')" #fileInput style="display: none;"> 
+            <button type="button" pButton icon="pi pi-paperclip" class="p-button-primary" (click)="fileInput.click()"></button>
+            <input type="text" pInputText placeholder="Doc Convention" class="p-2" [value]="selectedFileName" readonly> 
+        </p-inputGroup>
+        
+    </div>
+   
+</div>

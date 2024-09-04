@@ -1,0 +1,90 @@
+.custom-carousel-container {
+    position: relative;
+    padding-top: 40px; }
+
+.navigation-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 10px; /* Espace entre les boutons */
+}
+
+.custom-carousel-prev, .custom-carousel-next {
+    margin: 5px;
+}
+
+.p-carousel .p-carousel-content .p-carousel-item {
+    padding: 0; /* Réduit l'espacement entre les cartes */
+    margin-right: 10px; /* Ajuste l'espacement entre les cartes */
+}
+
+.card-container {
+    position: relative;
+    margin-left: 0;
+    transition: transform 0.3s ease-in-out; /* Ajout de transition pour une animation fluide */
+}
+
+.card-content {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Ajout de transition pour une animation fluide */
+}
+
+.card-container:hover {
+    transform: scale(1.1); /* Augmente la taille au survol */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre portée pour l'effet de relief */
+    z-index: 10000;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.image-container {
+    flex: 1;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+}
+
+.details-container {
+    flex: 2;
+    position: relative;
+}
+
+.name-rating-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.name-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-description {
+    display: none;
+    transition: opacity 0.3s;
+    padding: 10px;
+    margin-left: 0; /* Marge à gauche nulle */
+}
+
+.card-content:hover .card-description {
+    display: block;
+}
+
+.card-content:hover .detail-button {
+    display: block;
+}
+
+.detail-button {
+    display: none;
+    margin-left: auto;
+}
